@@ -1,5 +1,4 @@
-
-class Carro{
+export class Carro{
     private static contadorId_carro = 1;
 
     id_carro: number;
