@@ -5,12 +5,17 @@ export class CarroService{
 
 carroRepository : CarroRepository = CarroRepository.getInstance();
 
-listarTodos(): Carro []{
+listarTodosCarros(): Carro []{
     return this.carroRepository.listaTodosCarros();
 }
 
-obterPorId(id_carro: any): Carro | undefined{
+filtrarCarroPorID(id_carro: any): Carro | undefined{
     const idNUmber : number = parseInt (id_carro, 10);
+
+    if(isNaN(idNUmber)){
+        throw new Error("ID Inválido");
+    }
+    
     console.log(id_carro)
     return this.carroRepository.filtrarCarroPorID(idNUmber);
 }
@@ -29,7 +34,7 @@ cadastrarNovoCarro(carroData : any): Carro {
     if(carroExistente){
         throw new Error("Ja temos um carro com esta placa cadastrada");
     }
-    
+
     if(preco <= 0){
         throw new Error("Preço Inválido");
     }
