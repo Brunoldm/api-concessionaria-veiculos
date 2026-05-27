@@ -54,4 +54,8 @@ export class CarroRepository{
 
         return undefined
     }
+
+    filtrarCarroPorPlaca(placa: string): Carro | undefined{
+        return this.carroList.find(carro => carro.placa === placa);
+    }
 }
