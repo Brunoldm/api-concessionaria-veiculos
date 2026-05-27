@@ -50,4 +50,47 @@ cadastrarNovoCarro(carroData : any): Carro {
     this.carroRepository.cadastrarCarro(novoCarro);
     return novoCarro;
 }
+
+atualizarCarroPorID(id_carro: number, carroData: any): Carro{
+    const{ marca, modelo, ano, placa, preco, cor} = carroData;
+
+    if(!marca || !modelo || !ano || !placa || !preco || !cor ){
+        throw new Error ("Informações incompletas");
+    }
+
+    const carroExistente = this.carroRepository.filtrarCarroPorPlaca(placa);
+
+    if(carroExistente && carroExistente.id_carro !== id_carro){
+        throw new Error("Ja temos um carro com esta placa cadastrada");
+    }
+
+    if(preco <= 0){
+        throw new Error("Preço Inválido");
+    }
+
+    const novoCarro = new Carro (marca, modelo, ano, placa, preco, cor);
+    const carroAtualizado = this.carroRepository.atualizarCarroPorID(id_carro, novoCarro);
+
+    if (!carroAtualizado) {
+    throw new Error("Carro não encontrado");
+}
+
+    return carroAtualizado;
+}
+
+apagarCarroPorID(id_carro: any): Carro {
+    const idNUmber : number = parseInt (id_carro, 10);
+
+    if(isNaN(idNUmber)){
+        throw new Error("ID Inválido");
+    }
+
+    const carroApagado = this.carroRepository.apagarCarroPorID(idNUmber);
+
+    if(!carroApagado){
+        throw new Error("Carro não encontrado")
+    }
+
+    return carroApagado;
+}
 }

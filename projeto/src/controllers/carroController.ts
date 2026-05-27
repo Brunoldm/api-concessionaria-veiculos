@@ -1,5 +1,6 @@
 import { Request , Response } from "express";
 import { CarroService } from "../services/CarroService";
+import { request } from "node:http";
 
 const carroService = new CarroService();
 
@@ -37,6 +38,7 @@ export function filtrarCarroPorID(req: Request, res: Response): void{
 export function obterCarrosDisponiveis(){
     // Implementação apos criação da classe estoque
 }
+
 
 
 
