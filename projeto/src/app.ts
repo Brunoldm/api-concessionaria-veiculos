@@ -4,7 +4,7 @@ import {listarTodosCarros, filtrarCarroPorID, obterCarrosDisponiveis, cadastrarN
 
 const app = express();
 
-const PORT = process.env.Port ?? 3000;
+const PORT = process.env.PORT ?? 3000;
 app.use(express.json())
 
 function logInfo(){
@@ -12,10 +12,10 @@ function logInfo(){
 }
 
 app.get("/api/carros", listarTodosCarros);
-app.get("api/carros/:id",filtrarCarroPorID);
-app.get("api/carros/disponiveis",obterCarrosDisponiveis);
-app.post("api/carros",cadastrarNovoCarro);
+app.get("/api/carros/:id",filtrarCarroPorID);
+app.get("/api/carros/disponiveis",obterCarrosDisponiveis);
+app.post("/api/carros",cadastrarNovoCarro);
 app.put("/api/carros/:id",atualizarCarroPorID);
-app.delete("api/carros/:id",apagarCarroPorID);
+app.delete("/api/carros/:id",apagarCarroPorID);
 
 app.listen (PORT, logInfo)

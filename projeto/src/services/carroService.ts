@@ -93,15 +93,6 @@ atualizarCarroPorID(id_car: any, carroData: any): Carro{
         }
     }
 
-    const carroExistente = this.carroRepository.filtrarCarroPorPlaca(placa);
-
-    if(carroExistente && carroExistente.id_carro !== id_carro){
-        throw {
-            status:409,
-            message:"Ja temos um carro com esta placa cadastrada"
-        }
-    }
-
     if(preco <= 0){
         throw{
             status:400,
@@ -117,17 +108,34 @@ atualizarCarroPorID(id_car: any, carroData: any): Carro{
         }
     }
 
-    const novoCarro = new Carro (marca, modelo, ano, placa, preco, cor);
-    const carroAtualizado = this.carroRepository.atualizarCarroPorID(id_carro, novoCarro);
+    const carroExistente = this.carroRepository.filtrarCarroPorID(id_carro);
 
-    if (!carroAtualizado) {
-    throw {
-        status:404,
-        message:"Carro não encontrado"
+    if(!carroExistente){
+        throw{
+            status:404,
+            message:"ID do carro não existe"
+        }
     }
-}
 
-    return carroAtualizado;
+    const carroPlaca = this.carroRepository.filtrarCarroPorPlaca(placa);
+
+    if(carroPlaca && carroPlaca.id_carro !== id_carro){
+        throw {
+            status:409,
+            message:"Ja temos um carro com esta placa cadastrada"
+        }
+    }
+
+    carroExistente.marca = marca;
+    carroExistente.modelo = modelo;
+    carroExistente.ano = ano;
+    carroExistente.placa = placa;
+    carroExistente.preco = preco;
+    carroExistente.cor = cor;
+
+    this.carroRepository.atualizarCarroPorID(id_carro, carroExistente);
+
+    return carroExistente;
 }
 
 apagarCarroPorID(id_carro: any): Carro {

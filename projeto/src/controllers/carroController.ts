@@ -18,7 +18,7 @@ export function listarTodosCarros(req: Request, res: Response): void{
 
 export function filtrarCarroPorID(req: Request, res: Response): void{
     try{
-        const id_carro= req.params.id_carro;
+        const id_carro= req.params.id;
 
         const carro = carroService.filtrarCarroPorID(id_carro);
 
@@ -58,7 +58,7 @@ export function cadastrarNovoCarro(req: Request, res: Response){
 export function atualizarCarroPorID(req: Request, res: Response){
     try{
         const carroData: any = req.body
-        const id_carro= req.params.id_carro
+        const id_carro= req.params.id
 
         const carroAtualizado = carroService.atualizarCarroPorID(id_carro, carroData)
 
@@ -76,7 +76,7 @@ export function atualizarCarroPorID(req: Request, res: Response){
 
 export function apagarCarroPorID(req: Request, res: Response){
     try{
-    const id_carro = req.params.id_carro;
+    const id_carro = req.params.id;
 
     const carroApagado = carroService.apagarCarroPorID(id_carro)
 
