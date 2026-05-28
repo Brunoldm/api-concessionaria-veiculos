@@ -126,16 +126,9 @@ atualizarCarroPorID(id_car: any, carroData: any): Carro{
         }
     }
 
-    carroExistente.marca = marca;
-    carroExistente.modelo = modelo;
-    carroExistente.ano = ano;
-    carroExistente.placa = placa;
-    carroExistente.preco = preco;
-    carroExistente.cor = cor;
+    const carroAtualizado = this.carroRepository.atualizarCarroPorID(id_carro, carroData)
 
-    this.carroRepository.atualizarCarroPorID(id_carro, carroExistente);
-
-    return carroExistente;
+    return carroAtualizado;
 }
 
 apagarCarroPorID(id_carro: any): Carro {
@@ -148,14 +141,16 @@ apagarCarroPorID(id_carro: any): Carro {
         }
     }
 
-    const carroApagado = this.carroRepository.apagarCarroPorID(idNumber);
+    const carroExistente = this.carroRepository.filtrarCarroPorID(idNumber)
 
-    if(!carroApagado){
-        throw {
+    if(!carroExistente){
+        throw{
             status:404,
-            message:"Carro não encontrado",
+            message:"ID do carro não existe"
         }
     }
+
+    const carroApagado = this.carroRepository.apagarCarroPorID(idNumber);
 
     return carroApagado;
 }
