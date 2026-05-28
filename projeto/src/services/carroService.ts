@@ -13,35 +13,59 @@ filtrarCarroPorID(id_carro: any): Carro | undefined{
     const idNUmber : number = parseInt (id_carro, 10);
 
     if(isNaN(idNUmber)){
-        throw new Error("ID Inválido");
+        throw{
+            status:400,
+            message: "ID invalido"
+        }
     }
     
     console.log(id_carro)
-    return this.carroRepository.filtrarCarroPorID(idNUmber);
+
+    const carro = this.carroRepository.filtrarCarroPorID(idNUmber);
+    
+    if(!carro){
+    throw{
+        status:400,
+        message:"Carro não encontrado"
+    }
+}
+    return carro;
 }
 
 obterCarrosDisponiveis(){
     // Implementação apos criação da classe estoque
 }
 
-cadastrarNovoCarro(carroData : any): Carro {
+cadastrarNovoCarro(carroData : Carro): Carro {
     const{ marca, modelo, ano, placa, preco, cor} = carroData;
-    if(!marca || !modelo || !ano || !placa || !preco || !cor ){
-        throw new Error ("Informações incompletas");
+    if(!marca || !modelo || !ano || !placa || preco == null || !cor ){
+        throw{
+            status:400,
+             message:"Informações incompletas"
+        }
     }
 
     const carroExistente = this.carroRepository.filtrarCarroPorPlaca(placa);
     if(carroExistente){
-        throw new Error("Ja temos um carro com esta placa cadastrada");
+        throw{
+            status:409,
+            message:"Ja temos um carro com esta placa cadastrada"
+        }
     }
 
     if(preco <= 0){
-        throw new Error("Preço Inválido");
+        throw{
+            status:400,
+            message:"Preço Inválido"
+        }
     }
 
     const anoAtual = new Date().getFullYear();
     if(!Number.isInteger(ano) || ano < 1950 || ano > anoAtual+1){
-        throw new Error("Ano Inválido");
+        throw {
+            status:400,
+            message:"Ano Inválido"
+        }
     }
 
     //Regra do estoque apos a implementar a classe estoque
@@ -51,44 +75,78 @@ cadastrarNovoCarro(carroData : any): Carro {
     return novoCarro;
 }
 
-atualizarCarroPorID(id_carro: number, carroData: any): Carro{
+atualizarCarroPorID(id_car: any, carroData: any): Carro{
+    const id_carro : number = parseInt(id_car, 10);
     const{ marca, modelo, ano, placa, preco, cor} = carroData;
 
-    if(!marca || !modelo || !ano || !placa || !preco || !cor ){
-        throw new Error ("Informações incompletas");
+    if(isNaN(id_carro)){
+        throw {
+            status:400,
+            message:"ID Inválido"
+        }
+    }
+
+    if(!marca || !modelo || !ano || !placa || preco == null || !cor ){
+        throw{
+            status:400,
+            message:"Informações incompletas"
+        }
     }
 
     const carroExistente = this.carroRepository.filtrarCarroPorPlaca(placa);
 
     if(carroExistente && carroExistente.id_carro !== id_carro){
-        throw new Error("Ja temos um carro com esta placa cadastrada");
+        throw {
+            status:409,
+            message:"Ja temos um carro com esta placa cadastrada"
+        }
     }
 
     if(preco <= 0){
-        throw new Error("Preço Inválido");
+        throw{
+            status:400,
+            message:"Preço Inválido"
+        }
+    }
+
+    const anoAtual = new Date().getFullYear();
+    if(!Number.isInteger(ano) || ano < 1950 || ano > anoAtual+1){
+        throw {
+            status:400,
+            message:"Ano Inválido"
+        }
     }
 
     const novoCarro = new Carro (marca, modelo, ano, placa, preco, cor);
     const carroAtualizado = this.carroRepository.atualizarCarroPorID(id_carro, novoCarro);
 
     if (!carroAtualizado) {
-    throw new Error("Carro não encontrado");
+    throw {
+        status:404,
+        message:"Carro não encontrado"
+    }
 }
 
     return carroAtualizado;
 }
 
 apagarCarroPorID(id_carro: any): Carro {
-    const idNUmber : number = parseInt (id_carro, 10);
+    const idNumber : number = parseInt (id_carro, 10);
 
-    if(isNaN(idNUmber)){
-        throw new Error("ID Inválido");
+    if(isNaN(idNumber)){
+        throw {
+            status:400,
+            message:"ID Inválido"
+        }
     }
 
-    const carroApagado = this.carroRepository.apagarCarroPorID(idNUmber);
+    const carroApagado = this.carroRepository.apagarCarroPorID(idNumber);
 
     if(!carroApagado){
-        throw new Error("Carro não encontrado")
+        throw {
+            status:404,
+            message:"Carro não encontrado",
+        }
     }
 
     return carroApagado;

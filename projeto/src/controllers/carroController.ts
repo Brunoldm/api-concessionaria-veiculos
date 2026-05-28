@@ -10,7 +10,9 @@ export function listarTodosCarros(req: Request, res: Response): void{
         res.status(200).json(carros);
 
     } catch (error: any){
-        res.status(400).json({message: error.message});
+        res.status(400).json({
+            message:error.message || "Erro do sistema"
+        });
     }
 }
 
@@ -20,17 +22,12 @@ export function filtrarCarroPorID(req: Request, res: Response): void{
 
         const carro = carroService.filtrarCarroPorID(id_carro);
 
-        if(!carro){
-            res.status(404).json({message: "Carro não encontrado"});
-            return ;
-        }
-
         res.status(200).json(carro);
         
     } catch(error:any){
 
-        res.status(400).json({
-            message: error.message
+        res.status(error.status || 500).json({
+            message:error.message || "Erro do sistema"
         })
     }
 }
@@ -39,6 +36,57 @@ export function obterCarrosDisponiveis(){
     // Implementação apos criação da classe estoque
 }
 
+export function cadastrarNovoCarro(req: Request, res: Response){
+    try{
+        const carroData: any = req.body
 
+        const carroCadastrado = carroService.cadastrarNovoCarro(carroData);
+
+        res.status(201).json({
+            message:"Carro cadastrado com sucesso",
+            carro: carroCadastrado
+        });
+    }
+
+    catch(error: any){
+        res.status(error.status || 500).json({
+            message:error.message || "Erro do sistema"
+        })
+    }
+}
+
+export function atualizarCarroPorID(req: Request, res: Response){
+    try{
+        const carroData: any = req.body
+        const id_carro= req.params.id_carro
+
+        const carroAtualizado = carroService.atualizarCarroPorID(id_carro, carroData)
+
+        res.status(200).json({
+            message: "Carro Atualizado",
+            carro: carroAtualizado
+        })
+    }
+    catch(error: any){
+        res.status(error.status || 500).json({
+            message:error.message || "Erro do sistema"
+        })
+    }
+}
+
+export function apagarCarroPorID(req: Request, res: Response){
+    try{
+    const id_carro = req.params.id_carro;
+
+    const carroApagado = carroService.apagarCarroPorID(id_carro)
+
+    res.status(200).json("Carro removido com sucesso")
+    
+    }catch(error: any){
+        res.status(error.status || 500).json ({
+            message: error.message || "Erro do sistema"
+        })
+    }
+}
 
 
