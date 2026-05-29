@@ -15,5 +15,4 @@ export class Estoque{
         this.localizacao_patio = localizacao_patio
         this.data_entrada = data_entrada
     }
-
 }
