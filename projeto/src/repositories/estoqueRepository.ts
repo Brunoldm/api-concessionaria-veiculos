@@ -29,7 +29,7 @@ export class EstoqueRepository{
         this.estoqueList.push(estoque)
     }
 
-    atualizarQuantidadeLocalizacao(id_estoque: number, estoqueData: Estoque): Estoque{
+    atualizarEstoque(id_estoque: number, estoqueData: Estoque): Estoque{
 
         const estoque = this.estoqueList.find(estoque => estoque.id_estoque === id_estoque)!;
 
@@ -40,7 +40,7 @@ export class EstoqueRepository{
     }
 
     removerRegistroEstoque(id_estoque: number): Estoque {
-        const indice = this.estoqueList.findIndex(estoque => estoque.id_carro === id_estoque);
+        const indice = this.estoqueList.findIndex(estoque => estoque.id_estoque === id_estoque);
 
         const estoqueApagado = this.estoqueList[indice];
 

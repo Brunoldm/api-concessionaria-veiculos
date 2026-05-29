@@ -19,8 +19,6 @@ filtrarCarroPorID(id_carro: any): Carro | undefined{
         }
     }
     
-    console.log(id_carro)
-
     const carro = this.carroRepository.filtrarCarroPorID(idNUmber);
     
     if(!carro){
