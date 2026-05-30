@@ -1,6 +1,5 @@
 import { Request , Response } from "express";
 import { CarroService } from "../services/CarroService";
-import { request } from "node:http";
 
 const carroService = new CarroService();
 
@@ -32,11 +31,11 @@ export function filtrarCarroPorID(req: Request, res: Response): void{
     }
 }
 
-export function obterCarrosDisponiveis(){
+export function obterCarrosDisponiveis(): void{
     // Implementação apos criação da classe estoque
 }
 
-export function cadastrarNovoCarro(req: Request, res: Response){
+export function cadastrarNovoCarro(req: Request, res: Response): void{
     try{
         const carroData: any = req.body
 
@@ -55,7 +54,7 @@ export function cadastrarNovoCarro(req: Request, res: Response){
     }
 }
 
-export function atualizarCarroPorID(req: Request, res: Response){
+export function atualizarCarroPorID(req: Request, res: Response): void{
     try{
         const carroData: any = req.body
         const id_carro= req.params.id
@@ -74,11 +73,11 @@ export function atualizarCarroPorID(req: Request, res: Response){
     }
 }
 
-export function apagarCarroPorID(req: Request, res: Response){
+export function apagarCarroPorID(req: Request, res: Response): void{
     try{
     const id_carro = req.params.id;
-
-    const carroApagado = carroService.apagarCarroPorID(id_carro)
+    
+    carroService.apagarCarroPorID(id_carro)
 
     res.status(200).json("Carro removido com sucesso")
     
