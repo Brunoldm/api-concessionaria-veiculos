@@ -21,10 +21,6 @@ export class CarroRepository{
         return this.carroList.find( carro => carro.id_carro === id_carro);
     }
 
-    filtrarCarrosDisponiveis(){
-        // Implementação apos criação da classe estoque
-    }
-
     cadastrarCarro( carro : Carro){
         this.carroList.push(carro);
     }

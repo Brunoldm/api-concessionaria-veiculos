@@ -31,8 +31,16 @@ export function filtrarCarroPorID(req: Request, res: Response): void{
     }
 }
 
-export function obterCarrosDisponiveis(): void{
-    // Implementação apos criação da classe estoque
+export function obterCarrosDisponiveis(req: Request,res: Response): void{
+    try{
+        const carros = carroService.obterCarrosDisponiveis();
+        res.status(200).json(carros);
+
+    } catch (error: any){
+        res.status(400).json({
+            message:error.message || "Erro do sistema"
+        });
+    }
 }
 
 export function cadastrarNovoCarro(req: Request, res: Response): void{

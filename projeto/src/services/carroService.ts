@@ -1,9 +1,11 @@
 import { Carro } from "../models/Carro";
 import { CarroRepository } from "../repositories/CarroRepository";
+import { EstoqueRepository } from "../repositories/EstoqueRepository";
 
 export class CarroService{
 
-carroRepository : CarroRepository = CarroRepository.getInstance();
+private carroRepository : CarroRepository = CarroRepository.getInstance();
+private estoqueRepository : EstoqueRepository = EstoqueRepository.getInstance();
 
 listarTodosCarros(): Carro []{
     return this.carroRepository.listaTodosCarros();
@@ -23,15 +25,29 @@ filtrarCarroPorID(id_carro: any): Carro | undefined{
     
     if(!carro){
     throw{
-        status:400,
+        status:404,
         message:"Carro não encontrado"
     }
 }
     return carro;
 }
 
-obterCarrosDisponiveis(){
-    // Implementação apos criação da classe estoque
+obterCarrosDisponiveis(): Carro[] {
+
+    const carros = this.carroRepository.listaTodosCarros();
+
+    const carrosDisponiveis: Carro[] = [];
+
+    for(const carro of carros){
+
+        const estoque = this.estoqueRepository.buscarEstoqueEspecificoDeCarro(carro.id_carro);
+
+        if(estoque && estoque.quantidade > 0){
+            carrosDisponiveis.push(carro);
+        }
+    }
+
+    return carrosDisponiveis;
 }
 
 cadastrarNovoCarro(carroData : Carro): Carro {
@@ -65,8 +81,6 @@ cadastrarNovoCarro(carroData : Carro): Carro {
             message:"Ano Inválido"
         }
     }
-
-    //Regra do estoque apos a implementar a classe estoque
 
     const novoCarro = new Carro (marca, modelo, ano, placa, preco, cor);
     this.carroRepository.cadastrarCarro(novoCarro);
@@ -128,7 +142,7 @@ atualizarCarroPorID(id_car: any, carroData: any): Carro{
 
     return carroAtualizado;
 }
-
+    
 apagarCarroPorID(id_carro: any): Carro {
     const idNumber : number = parseInt (id_carro, 10);
 
@@ -148,6 +162,14 @@ apagarCarroPorID(id_carro: any): Carro {
         }
     }
 
+    const carroEstoque = this.estoqueRepository.buscarEstoqueEspecificoDeCarro(idNumber);
+
+    if(carroEstoque){
+        throw{
+            status:422,
+            message:"Carro possui registro de estoque, não é possivel deletar"
+        }
+    }
     const carroApagado = this.carroRepository.apagarCarroPorID(idNumber);
 
     return carroApagado;

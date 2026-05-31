@@ -26,7 +26,7 @@ buscarRegistroDeEstoque(id_estoque: any): Estoque {
     if(!estoque){
     throw{
         status:404,
-        message:"Carro não encontrado"
+        message:"Estoque não encontrado para este carro"
     }
 }
     return estoque;
@@ -47,7 +47,7 @@ buscarEstoqueEspecificoDeCarro(id_carro: any): Estoque {
     if(!estoque){
     throw{
         status:400,
-        message:"Carro não encontrado"
+        message:"Estoque não encontrado para este carro"
     }
 }
     return estoque;
@@ -151,9 +151,9 @@ removerRegistroEstoque(id_estoq: any): Estoque{
         }
     }
     
-    const id_estoque = this.estoqueRepository.buscarRegistroDeEstoque(idNumber)
+    const estoque = this.estoqueRepository.buscarRegistroDeEstoque(idNumber)
 
-    if(!id_estoque){
+    if(!estoque){
         throw{
             status:404,
             message:"ID não encontrado"

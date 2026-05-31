@@ -33,7 +33,7 @@ export function buscarRegistroDeEstoque(req: Request, res: Response): void{
 
 export function buscarEstoqueEspecificoDeCarro(req: Request, res: Response): void{
     try{
-        const id_carro= req.params.id;
+        const id_carro= req.params.id_carro;
 
         const estoque = estoqueService.buscarEstoqueEspecificoDeCarro(id_carro);
 

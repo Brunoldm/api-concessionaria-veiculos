@@ -17,12 +17,12 @@ export class EstoqueRepository{
         return this.estoqueList;
     }
 
-    buscarRegistroDeEstoque(id_estoque: number): Estoque{
-        return this.estoqueList.find(estoque => estoque.id_estoque === id_estoque)!;
+    buscarRegistroDeEstoque(id_estoque: number): Estoque | undefined{
+        return this.estoqueList.find(estoque => estoque.id_estoque === id_estoque);
     }   
 
-    buscarEstoqueEspecificoDeCarro(id_carro: number): Estoque{
-        return this.estoqueList.find(car => car.id_carro === id_carro)!;
+    buscarEstoqueEspecificoDeCarro(id_carro: number): Estoque | undefined{
+        return this.estoqueList.find(car => car.id_carro === id_carro);
     }
 
     criarNovoRegistroEstoque(estoque: Estoque){
