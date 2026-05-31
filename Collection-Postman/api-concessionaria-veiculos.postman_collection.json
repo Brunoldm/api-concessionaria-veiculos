@@ -1,0 +1,295 @@
+{
+  "info": {
+    "_postman_id": "f1ef574d-f36c-4fa9-8652-9880420674eb",
+    "name": "api-concessionaria-veiculos",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "33761189"
+  },
+  "item": [
+    {
+      "name": "Listar todos os carros",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/api/carros",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "carros"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Listar todos os registros de estoque",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/api/estoque",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "estoque"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Listar todos os registros de estoque de um carro especifico",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/api/estoque/carro/1",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "estoque",
+            "carro",
+            "1"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Listar todos os registros de estoque pelo ID",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/api/estoque/1",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "estoque",
+            "1"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Filtrar carro por ID",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/api/carros/3",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "carros",
+            "3"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Obter carros disponiveis",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/api/carros/disponiveis",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "carros",
+            "disponiveis"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Cadastrar novo carro",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n   \"marca\": \"Toyota\",\r\n   \"modelo\": \"Gol\",\r\n   \"ano\": 2023,\r\n   \"placa\": \"XYZ9878\",\r\n   \"preco\": 145000,\r\n   \"cor\": \"Branco\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/api/carros",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "carros"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Cadastrar novo registro de estoque",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/api/estoque",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "estoque"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Atualizar carro por  ID",
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n   \"marca\": \"gol\",\r\n   \"modelo\": \"Corolla\",\r\n   \"ano\": 2024,\r\n   \"placa\": \"XYZ987\",\r\n   \"preco\": 145000,\r\n   \"cor\": \"Branco\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/api/carros/1",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "carros",
+            "1"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Atualizar registro de estoque por ID",
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:3000/api/estoque/1",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "estoque",
+            "1"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Apagar carro por ID",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/api/carros/2",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "carros",
+            "2"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Apagar registro de estoque por ID",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/api/estoque/1",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "estoque",
+            "1"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
