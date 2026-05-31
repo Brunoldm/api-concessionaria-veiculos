@@ -1,101 +1,120 @@
 import { Cliente } from "../models/Cliente";
-import {listarClientes, buscarClientePorId, adicionarCliente, atualizarClientePorId, removerCliente} from "../repositories/clienteRepository";
+import { ClienteRepository } from "../repositories/clienteRepository";
 
-export function listarTodosClientes(): Cliente[] {
-    return listarClientes();
-}
+export class ClienteService {
 
-export function buscarCliente(id: any): Cliente | undefined {
-    const idNumber: number = parseInt(id, 10);
+    clienteRepository: ClienteRepository = ClienteRepository.getInstance();
 
-    if (isNaN(idNumber)) {
-        throw {
-            status: 400,
-            message: "ID inválido"
-        }
+    listarTodosClientes(): Cliente[] {
+        return this.clienteRepository.listarClientes();
     }
 
-    const cliente = buscarClientePorId(idNumber);
+    buscarCliente(id: any): Cliente | undefined {
 
-    if (!cliente) {
-        throw {
-            status: 404,
-            message: "Cliente não encontrado"
+        const idNumber: number = parseInt(id, 10);
+
+        if (isNaN(idNumber)) {
+            throw {
+                status: 400,
+                message: "ID inválido"
+            }
         }
+
+        const cliente = this.clienteRepository.buscarClientePorId(idNumber);
+
+        if (!cliente) {
+            throw {
+                status: 404,
+                message: "Cliente não encontrado"
+            }
+        }
+
+        return cliente;
     }
 
-    return cliente;
-}
+    cadastrarNovoCliente(clienteData: Cliente): Cliente {
 
-export function cadastrarNovoCliente(clienteData: Cliente): Cliente {
-    const { nome, cpf, telefone, email, cidade } = clienteData;
+        const { nome, cpf, telefone, email, cidade } = clienteData;
 
-    if (!nome || !cpf || !telefone) {
-        throw {
-            status: 400,
-            message: "Informações incompletas"
+        if (!nome || !cpf || !telefone) {
+            throw {
+                status: 400,
+                message: "Informações incompletas"
+            }
         }
+
+        const cpfExistente = this.clienteRepository
+            .listarClientes()
+            .find(cliente => cliente.cpf === cpf);
+
+        if (cpfExistente) {
+            throw {
+                status: 409,
+                message: "CPF já cadastrado"
+            }
+        }
+
+        const novoCliente = new Cliente(
+            nome,
+            cpf,
+            telefone,
+            email,
+            cidade
+        );
+
+        this.clienteRepository.adicionarCliente(novoCliente);
+
+        return novoCliente;
     }
 
-    const cpfExistente = listarClientes().find(
-        cliente => cliente.cpf === cpf
-    );
+    atualizarCliente(id: any, clienteData: Cliente): Cliente | undefined {
 
-    if (cpfExistente) {
-        throw {
-            status: 409,
-            message: "CPF já cadastrado"
+        const idNumber: number = parseInt(id, 10);
+
+        if (isNaN(idNumber)) {
+            throw {
+                status: 400,
+                message: "ID inválido"
+            }
         }
+
+        const clienteExistente =
+            this.clienteRepository.buscarClientePorId(idNumber);
+
+        if (!clienteExistente) {
+            throw {
+                status: 404,
+                message: "Cliente não encontrado"
+            }
+        }
+
+        return this.clienteRepository.atualizarClientePorId(
+            idNumber,
+            clienteData
+        );
     }
 
-    const novoCliente = new Cliente(nome, cpf, telefone, email, cidade);
+    deletarCliente(id: any): boolean {
 
-    adicionarCliente(novoCliente);
+        const idNumber: number = parseInt(id, 10);
 
-    return novoCliente;
-}
-
-export function atualizarCliente(id: any, clienteData: Cliente): Cliente | undefined {
-
-    const idNumber: number = parseInt(id, 10);
-
-    if (isNaN(idNumber)) {
-        throw {
-            status: 400,
-            message: "ID inválido"
+        if (isNaN(idNumber)) {
+            throw {
+                status: 400,
+                message: "ID inválido"
+            }
         }
-    }
 
-    const clienteExistente = buscarClientePorId(idNumber);
+        const clienteExistente =
+            this.clienteRepository.buscarClientePorId(idNumber);
 
-    if (!clienteExistente) {
-        throw {
-            status: 404,
-            message: "Cliente não encontrado"
+        if (!clienteExistente) {
+            throw {
+                status: 404,
+                message: "Cliente não encontrado"
+            }
         }
+
+        return this.clienteRepository.removerCliente(idNumber);
     }
-
-    return atualizarClientePorId(idNumber, clienteData);
-}
-
-export function deletarCliente(id: any): boolean {
-    const idNumber: number = parseInt(id, 10);
-
-    if (isNaN(idNumber)) {
-        throw {
-            status: 400,
-            message: "ID inválido"
-        }
-    }
-
-    const clienteExistente = buscarClientePorId(idNumber);
-
-    if (!clienteExistente) {
-        throw {
-            status: 404,
-            message: "Cliente não encontrado"
-        }
-    }
-
-    return removerCliente(idNumber);
 }

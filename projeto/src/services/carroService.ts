@@ -1,6 +1,6 @@
 import { Carro } from "../models/Carro";
-import { CarroRepository } from "../repositories/CarroRepository";
-import { EstoqueRepository } from "../repositories/EstoqueRepository";
+import { CarroRepository } from "../repositories/carroRepository";
+import { EstoqueRepository } from "../repositories/estoqueRepository";
 
 export class CarroService{
 
