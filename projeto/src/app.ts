@@ -3,7 +3,8 @@ import {listarTodosCarros, filtrarCarroPorID, obterCarrosDisponiveis, cadastrarN
     atualizarCarroPorID, apagarCarroPorID} from "./controllers/carroController"
 import {listaTodosRegistroEstoque, buscarRegistroDeEstoque, buscarEstoqueEspecificoDeCarro, 
     criarNovoRegistroEstoque, atualizarEstoque, removerRegistroEstoque} from "./controllers/estoqueController"
-
+import { listarTodosVendedores, buscarVendedorPorId, cadastrarNovoVendedor, atualizarVendedor,
+     removerVendedor, listarNotasFiscaisDeUmVendedor } from "./controllers/vendedorController";
 const app = express();
 
 const PORT = process.env.PORT ?? 3000;
@@ -26,5 +27,13 @@ app.get("/api/estoque/carro/:id_carro",buscarEstoqueEspecificoDeCarro);
 app.post("/api/estoque", criarNovoRegistroEstoque);
 app.put("/api/estoque/:id", atualizarEstoque);
 app.delete("/api/estoque/:id", removerRegistroEstoque);
+
+
+app.get("/api/vendedores", listarTodosVendedores);
+app.get("/api/vendedores/:id", buscarVendedorPorId);
+app.post("/api/vendedores", cadastrarNovoVendedor);
+app.put("/api/vendedores/:id", atualizarVendedor);
+app.delete("/api/vendedores/:id", removerVendedor);
+app.get("/api/vendedores/notas/:id", listarNotasFiscaisDeUmVendedor);
 
 app.listen (PORT, logInfo)
