@@ -1,439 +1,589 @@
 {
-  "info": {
-    "_postman_id": "45eeed2f-934f-498b-94a4-679e5a3e07aa",
-    "name": "api-concessionaria-veiculos",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "_exporter_id": "27334176"
-  },
-  "item": [
-    {
-      "name": "Carro",
-      "item": [
-        {
-          "name": "Listar todos os carros",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "http://localhost:3000/api/carros",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "3000",
-              "path": [
-                "api",
-                "carros"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "Filtrar carro por ID",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "http://localhost:3000/api/carros/1",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "3000",
-              "path": [
-                "api",
-                "carros",
-                "1"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "Apagar carro por ID",
-          "request": {
-            "method": "DELETE",
-            "header": [],
-            "url": {
-              "raw": "http://localhost:3000/api/carros/2",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "3000",
-              "path": [
-                "api",
-                "carros",
-                "2"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "Cadastrar novo carro",
-          "request": {
-            "method": "POST",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n   \"marca\": \"Vows\",\r\n   \"modelo\": \"Gol\",\r\n   \"ano\": 2023,\r\n   \"placa\": \"XYZ9879\",\r\n   \"preco\": 145000,\r\n   \"cor\": \"Branco\"\r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "http://localhost:3000/api/carros",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "3000",
-              "path": [
-                "api",
-                "carros"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "Atualizar carro por  ID",
-          "request": {
-            "method": "PUT",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n   \"marca\": \"Ford\",\r\n   \"modelo\": \"Honda\",\r\n   \"ano\": 2024,\r\n   \"placa\": \"XYZ9875\",\r\n   \"preco\": 145000,\r\n   \"cor\": \"Branco\"\r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "http://localhost:3000/api/carros/1",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "3000",
-              "path": [
-                "api",
-                "carros",
-                "1"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "Obter carros disponiveis",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "http://localhost:3000/api/carros/disponiveis",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "3000",
-              "path": [
-                "api",
-                "carros",
-                "disponiveis"
-              ]
-            }
-          },
-          "response": []
-        }
-      ]
-    },
-    {
-      "name": "Estoque",
-      "item": [
-        {
-          "name": "Listar todos os registros de estoque",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "http://localhost:3000/api/estoque",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "3000",
-              "path": [
-                "api",
-                "estoque"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "Listar todos os registros de estoque de um carro especifico",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "http://localhost:3000/api/estoque/carro/1",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "3000",
-              "path": [
-                "api",
-                "estoque",
-                "carro",
-                "1"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "Listar todos os registros de estoque pelo ID",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "http://localhost:3000/api/estoque/1",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "3000",
-              "path": [
-                "api",
-                "estoque",
-                "1"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "Cadastrar novo registro de estoque",
-          "request": {
-            "method": "POST",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "http://localhost:3000/api/estoque",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "3000",
-              "path": [
-                "api",
-                "estoque"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "Atualizar registro de estoque por ID",
-          "request": {
-            "method": "PUT",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "http://localhost:3000/api/estoque/1",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "3000",
-              "path": [
-                "api",
-                "estoque",
-                "1"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "Apagar registro de estoque por ID",
-          "request": {
-            "method": "DELETE",
-            "header": [],
-            "url": {
-              "raw": "http://localhost:3000/api/estoque/1",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "3000",
-              "path": [
-                "api",
-                "estoque",
-                "1"
-              ]
-            }
-          },
-          "response": []
-        }
-      ]
-    },
-    {
-      "name": "Cliente",
-      "item": [
-        {
-          "name": "ListarClientes",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "http://localhost:3000/api/clientes",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "3000",
-              "path": [
-                "api",
-                "clientes"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "CadastrarClientes",
-          "request": {
-            "method": "POST",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n    \"nome\": \"Bruno\",\r\n    \"cpf\": \"98765432100\",\r\n    \"telefone\": \"987654321\",\r\n    \"email\": \"Bruno@hotmail.com\",\r\n    \"cidade\": \"Boituva\"\r\n}\r\n",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "http://localhost:3000/api/clientes",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "3000",
-              "path": [
-                "api",
-                "clientes"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "AtualizarCLiente",
-          "request": {
-            "method": "PUT",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n    \"nome\": \"Leandro Yunoguthi\",\r\n    \"cpf\": \"12345678900\",\r\n    \"telefone\": \"123456789\",\r\n    \"email\": \"leandro.yunoguthi@hotmail.com\",\r\n    \"cidade\": \"Boituva\"\r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "http://localhost:3000/api/clientes/1",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "3000",
-              "path": [
-                "api",
-                "clientes",
-                "1"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "BuscarCliente",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "http://localhost:3000/api/clientes/2",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "3000",
-              "path": [
-                "api",
-                "clientes",
-                "2"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "DeletarCliente",
-          "request": {
-            "method": "DELETE",
-            "header": [],
-            "url": {
-              "raw": "http://localhost:3000/api/clientes/2",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "3000",
-              "path": [
-                "api",
-                "clientes",
-                "2"
-              ]
-            }
-          },
-          "response": []
-        }
-      ]
-    },
-    {
-      "name": "Nota Fiscal",
-      "item": []
-    },
-    {
-      "name": "Vendedor",
-      "item": []
-    }
-  ]
+	"info": {
+		"_postman_id": "e4be1a75-36bc-436a-8a5a-27a35eb30c7a",
+		"name": "api-concessionaria-veiculos",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27334157"
+	},
+	"item": [
+		{
+			"name": "Carro",
+			"item": [
+				{
+					"name": "Listar todos os carros",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/carros",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"carros"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Filtrar carro por ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/carros/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"carros",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Apagar carro por ID",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/carros/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"carros",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cadastrar novo carro",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"marca\": \"Vows\",\r\n   \"modelo\": \"Gol\",\r\n   \"ano\": 2023,\r\n   \"placa\": \"XYZ9879\",\r\n   \"preco\": 145000,\r\n   \"cor\": \"Branco\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/carros",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"carros"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar carro por  ID",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"marca\": \"Ford\",\r\n   \"modelo\": \"Honda\",\r\n   \"ano\": 2024,\r\n   \"placa\": \"XYZ9875\",\r\n   \"preco\": 145000,\r\n   \"cor\": \"Branco\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/carros/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"carros",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obter carros disponiveis",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/carros/disponiveis",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"carros",
+								"disponiveis"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Estoque",
+			"item": [
+				{
+					"name": "Listar todos os registros de estoque",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/estoque",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"estoque"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar todos os registros de estoque de um carro especifico",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/estoque/carro/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"estoque",
+								"carro",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar todos os registros de estoque pelo ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/estoque/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"estoque",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cadastrar novo registro de estoque",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/estoque",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"estoque"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar registro de estoque por ID",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/estoque/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"estoque",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Apagar registro de estoque por ID",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/estoque/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"estoque",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Cliente",
+			"item": [
+				{
+					"name": "ListarClientes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/clientes",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"clientes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CadastrarClientes",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"Bruno\",\r\n    \"cpf\": \"98765432100\",\r\n    \"telefone\": \"987654321\",\r\n    \"email\": \"Bruno@hotmail.com\",\r\n    \"cidade\": \"Boituva\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/clientes",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"clientes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AtualizarCLiente",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"Leandro Yunoguthi\",\r\n    \"cpf\": \"12345678900\",\r\n    \"telefone\": \"123456789\",\r\n    \"email\": \"leandro.yunoguthi@hotmail.com\",\r\n    \"cidade\": \"Boituva\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/clientes/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"clientes",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "BuscarCliente",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/clientes/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"clientes",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeletarCliente",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/clientes/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"clientes",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Nota Fiscal",
+			"item": [
+				{
+					"name": "EmitirNovaNotaFiscal",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"numero_nota\": \"NF-2026-0001\",\r\n  \"data_emissao\": \"2026-06-01\",\r\n  \"valor_total\": 85000.00,\r\n  \"id_cliente\": 1,\r\n  \"id_vendedor\": 1,\r\n  \"id_carro\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/notas",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"notas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ListarTodasAsNotas",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "RetornarNotaFiscalPorID",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Vendedor",
+			"item": [
+				{
+					"name": "ListarTodosOsVendedores",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/vendedores",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"vendedores"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AtualizarVendedor",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nome\": \"Neymar da Silva Santos Júnior\",\r\n  \"matricula\": \"VEND001\",\r\n  \"comissao_percentual\": 20\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/vendedores/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"vendedores",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CadastrarNovoVendedor",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nome\": \"joao\",\r\n  \"matricula\": \"VEND004\",\r\n  \"comissao_percentual\": 25\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/vendedores",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"vendedores"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "RetornarVendedorPorID",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "ListarNotasFiscaisDeVendedor",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "RemoverVendedor",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		}
+	]
 }
