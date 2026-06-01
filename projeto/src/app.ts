@@ -6,6 +6,7 @@ import {listaTodosRegistroEstoque, buscarRegistroDeEstoque, buscarEstoqueEspecif
 import { listarTodosVendedores, buscarVendedorPorId, cadastrarNovoVendedor, atualizarVendedor,
      removerVendedor, listarNotasFiscaisDeUmVendedor } from "./controllers/vendedorController";
 import {listarTodosClientes, buscarCliente, cadastrarNovoCliente, atualizarCliente, deletarCliente} from "./controllers/clienteController";
+import { listarTodasNotasFiscais, buscarNotaFiscalPorId, emitirNotaFiscal } from "./controllers/notaFiscalController";
 
 const app = express();
 
@@ -42,5 +43,9 @@ app.get("/api/clientes/:id", buscarCliente);
 app.post("/api/clientes", cadastrarNovoCliente);
 app.put("/api/clientes/:id", atualizarCliente);
 app.delete("/api/clientes/:id", deletarCliente);
+
+app.get("/api/notas", listarTodasNotasFiscais);
+app.get("/api/notas/:id", buscarNotaFiscalPorId);
+app.post("/api/notas", emitirNotaFiscal);
 
 app.listen (PORT, logInfo)
