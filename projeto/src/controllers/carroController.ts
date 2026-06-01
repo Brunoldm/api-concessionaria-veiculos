@@ -37,7 +37,7 @@ export function obterCarrosDisponiveis(req: Request,res: Response): void{
         res.status(200).json(carros);
 
     } catch (error: any){
-        res.status(400).json({
+        res.status(error.status || 500).json({
             message:error.message || "Erro do sistema"
         });
     }

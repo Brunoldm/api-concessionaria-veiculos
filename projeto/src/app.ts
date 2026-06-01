@@ -3,9 +3,9 @@ import {listarTodosCarros, filtrarCarroPorID, obterCarrosDisponiveis, cadastrarN
     atualizarCarroPorID, apagarCarroPorID} from "./controllers/carroController"
 import {listaTodosRegistroEstoque, buscarRegistroDeEstoque, buscarEstoqueEspecificoDeCarro, 
     criarNovoRegistroEstoque, atualizarEstoque, removerRegistroEstoque} from "./controllers/estoqueController"
-import { listarTodosVendedores, buscarVendedorPorId, cadastrarNovoVendedor, atualizarVendedor,
-     removerVendedor, listarNotasFiscaisDeUmVendedor } from "./controllers/vendedorController";
-import {listarTodosClientes, buscarCliente, cadastrarNovoCliente, atualizarCliente, deletarCliente} from "./controllers/clienteController";
+import { listarTodosVendedores, buscarVendedorPorId, cadastrarNovoVendedor, atualizarVendedor, removerVendedor, 
+    listarNotasFiscaisDeUmVendedor } from "./controllers/vendedorController";
+import {listarTodosClientes, buscarCliente, cadastrarNovoCliente, atualizarCliente, deletarCliente, listarNotasFiscaisDeUmCliente} from "./controllers/clienteController";
 import { listarTodasNotasFiscais, buscarNotaFiscalPorId, emitirNotaFiscal } from "./controllers/notaFiscalController";
 
 const app = express();
@@ -18,8 +18,8 @@ function logInfo(){
 }
 
 app.get("/api/carros", listarTodosCarros);
-app.get("/api/carros/:id",filtrarCarroPorID);
 app.get("/api/carros/disponiveis",obterCarrosDisponiveis);
+app.get("/api/carros/:id",filtrarCarroPorID);
 app.post("/api/carros",cadastrarNovoCarro);
 app.put("/api/carros/:id",atualizarCarroPorID);
 app.delete("/api/carros/:id",apagarCarroPorID);
@@ -43,6 +43,7 @@ app.get("/api/clientes/:id", buscarCliente);
 app.post("/api/clientes", cadastrarNovoCliente);
 app.put("/api/clientes/:id", atualizarCliente);
 app.delete("/api/clientes/:id", deletarCliente);
+app.get("/api/clientes/notas/:id", listarNotasFiscaisDeUmCliente);
 
 app.get("/api/notas", listarTodasNotasFiscais);
 app.get("/api/notas/:id", buscarNotaFiscalPorId);
