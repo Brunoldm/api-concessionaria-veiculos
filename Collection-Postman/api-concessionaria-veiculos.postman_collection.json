@@ -56,7 +56,7 @@
             "method": "DELETE",
             "header": [],
             "url": {
-              "raw": "http://localhost:3000/api/carros/2",
+              "raw": "http://localhost:3000/api/carros/1",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -65,7 +65,7 @@
               "path": [
                 "api",
                 "carros",
-                "2"
+                "1"
               ]
             }
           },
@@ -78,7 +78,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n   \"marca\": \"Vows\",\r\n   \"modelo\": \"Gol\",\r\n   \"ano\": 2023,\r\n   \"placa\": \"XYZ9879\",\r\n   \"preco\": 145000,\r\n   \"cor\": \"Branco\"\r\n}",
+              "raw": "{\r\n  \"marca\": \"Ford\",\r\n  \"modelo\": \"Modelo T\",\r\n  \"ano\": 2008, \r\n  \"placa\": \"XYZ-1234\",\r\n  \"preco\": 50000.00,\r\n  \"cor\": \"Preto\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -226,7 +226,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "",
+              "raw": "{\r\n  \"id_carro\": 1,\r\n  \"quantidade\": 2,\r\n  \"localizacao_patio\": \"Setor B\",\r\n  \"data_entrada\": \"2026-06-01\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -331,7 +331,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"nome\": \"Bruno\",\r\n    \"cpf\": \"98765432100\",\r\n    \"telefone\": \"987654321\",\r\n    \"email\": \"Bruno@hotmail.com\",\r\n    \"cidade\": \"Boituva\"\r\n}\r\n",
+              "raw": "{\r\n  \"nome\": \"Carlos Almeida\",\r\n  \"cpf\": \"098.765.432-11\",\r\n  \"telefone\": \"(15) 88888-8888\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -459,7 +459,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n  \"numero_nota\": \"NF-2026-0001\",\r\n  \"data_emissao\": \"2026-06-01\",\r\n  \"valor_total\": 85000.00,\r\n  \"id_cliente\": 1,\r\n  \"id_vendedor\": 1,\r\n  \"id_carro\": 1\r\n}",
+              "raw": "{\r\n  \"numero_nota\": \"NF-1000\",\r\n  \"data_emissao\": \"2026-06-01\",\r\n  \"valor_total\": 22000.00,\r\n  \"id_cliente\": 1,\r\n  \"id_vendedor\": 1,\r\n  \"id_carro\": 1\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -487,7 +487,16 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": ""
+              "raw": "http://localhost:3000/api/notas",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "notas"
+              ]
             }
           },
           "response": []
@@ -498,7 +507,17 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": ""
+              "raw": "http://localhost:3000/api/notas/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "notas",
+                "1"
+              ]
             }
           },
           "response": []
@@ -565,7 +584,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n  \"nome\": \"joao\",\r\n  \"matricula\": \"VEND004\",\r\n  \"comissao_percentual\": 25\r\n}",
+              "raw": "{\r\n  \"nome\": \"Vendedor Ganancioso\",\r\n  \"matricula\": \"VND-999\",\r\n  \"comissao_percentual\": 50\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -593,7 +612,17 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": ""
+              "raw": "http://localhost:3000/api/vendedores/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "vendedores",
+                "1"
+              ]
             }
           },
           "response": []
@@ -604,7 +633,18 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": ""
+              "raw": "http://localhost:3000/api/vendedores/notas/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "vendedores",
+                "notas",
+                "1"
+              ]
             }
           },
           "response": []
@@ -612,10 +652,20 @@
         {
           "name": "RemoverVendedor",
           "request": {
-            "method": "GET",
+            "method": "DELETE",
             "header": [],
             "url": {
-              "raw": ""
+              "raw": "http://localhost:3000/api/vendedores/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "3000",
+              "path": [
+                "api",
+                "vendedores",
+                "1"
+              ]
             }
           },
           "response": []
