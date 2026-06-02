@@ -1,6 +1,6 @@
 # API REST - Concessionária de Veículos 🚗
 
-Este projeto é uma API desenvolvida sendo para materia de Desenvolvimento WEB
+Este projeto é uma API desenvolvida para materia de Desenvolvimento WEB
 
 **Instituição:** Instituto Federal de São Paulo (IFSP) - Câmpus Boituva  
 **Professor:** Prof. Dr. Anisio Silva  
