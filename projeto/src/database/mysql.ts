@@ -1,5 +1,5 @@
 import mysql, { Connection, QueryError } from 'mysql2';
-import { ClienteRepository } from "../repository/ClienteRepository";
+import { ClienteRepository } from "../repositories/clienteRepository";
 
 const dbConfig = {
   host: 'localhost',
