@@ -8,11 +8,11 @@ export class ClienteService {
 
     notaFiscalRepository: NotaFiscalRepository = NotaFiscalRepository.getInstance();
 
-    listarTodosClientes(): Cliente[] {
+    async listarTodosClientes(): Promise<Cliente[]> {
         return this.clienteRepository.listarClientes();
     }
 
-    buscarCliente(id: any): Cliente | undefined {
+    async buscarCliente(id: any): Promise<Cliente> {
 
         const idNumber: number = parseInt(id, 10);
 
@@ -23,7 +23,7 @@ export class ClienteService {
             }
         }
 
-        const cliente = this.clienteRepository.buscarClientePorId(idNumber);
+        const cliente = await this.clienteRepository.buscarClientePorId(idNumber);
 
         if (!cliente) {
             throw {
@@ -35,7 +35,7 @@ export class ClienteService {
         return cliente;
     }
 
-    cadastrarNovoCliente(clienteData: Cliente): Cliente {
+    async cadastrarNovoCliente(clienteData: Cliente): Promise<Cliente> {
 
         const { nome, cpf, telefone, email, cidade } = clienteData;
 
@@ -46,9 +46,9 @@ export class ClienteService {
             }
         }
 
-        const cpfExistente = this.clienteRepository
-            .listarClientes()
-            .find(cliente => cliente.cpf === cpf);
+        const clientes = await this.clienteRepository.listarClientes();
+
+        const cpfExistente = clientes.find(cliente => cliente.cpf === cpf);
 
         if (cpfExistente) {
             throw {
@@ -58,6 +58,7 @@ export class ClienteService {
         }
 
         const novoCliente = new Cliente(
+            null,
             nome,
             cpf,
             telefone,
@@ -65,12 +66,12 @@ export class ClienteService {
             cidade
         );
 
-        this.clienteRepository.adicionarCliente(novoCliente);
+        await this.clienteRepository.adicionarCliente(novoCliente);
 
         return novoCliente;
     }
 
-    atualizarCliente(id: any, clienteData: Cliente): Cliente | undefined {
+    async atualizarCliente(id: any, clienteData: Cliente): Promise<Cliente> {
 
         const idNumber: number = parseInt(id, 10);
 
@@ -82,7 +83,7 @@ export class ClienteService {
         }
 
         const clienteExistente =
-            this.clienteRepository.buscarClientePorId(idNumber);
+            await this.clienteRepository.buscarClientePorId(idNumber);
 
         if (!clienteExistente) {
             throw {
@@ -91,13 +92,13 @@ export class ClienteService {
             }
         }
 
-        return this.clienteRepository.atualizarClientePorId(
+        return await this.clienteRepository.atualizarClientePorId(
             idNumber,
             clienteData
         );
     }
 
-    deletarCliente(id: any): boolean {
+    async deletarCliente(id: any): Promise<Cliente> {
 
         const idNumber: number = parseInt(id, 10);
 
@@ -109,7 +110,7 @@ export class ClienteService {
         }
 
         const clienteExistente =
-            this.clienteRepository.buscarClientePorId(idNumber);
+            await this.clienteRepository.buscarClientePorId(idNumber);
 
         if (!clienteExistente) {
             throw {
@@ -118,7 +119,7 @@ export class ClienteService {
             }
         }
 
-        const notas = this.notaFiscalRepository.listarNotasFiscaisDeUmCliente(idNumber);
+        const notas = await this.notaFiscalRepository.listarNotasFiscaisDeUmCliente(idNumber);
 
     if (notas.length > 0) {
         throw {
@@ -127,10 +128,10 @@ export class ClienteService {
         }
     }
 
-        return this.clienteRepository.removerCliente(idNumber);
+        return await this.clienteRepository.removerCliente(clienteExistente);
     }
 
-    listarNotasFiscaisDeUmCliente(id_cli: any) {
+    async listarNotasFiscaisDeUmCliente(id_cli: any) {
         const idNumber: number = parseInt(id_cli, 10);
 
         if (isNaN(idNumber)) {
@@ -140,7 +141,7 @@ export class ClienteService {
             };
         }
 
-        const clienteExistente = this.clienteRepository.buscarClientePorId(idNumber);
+        const clienteExistente = await this.clienteRepository.buscarClientePorId(idNumber);
 
         if (!clienteExistente) {
             throw {
@@ -149,7 +150,7 @@ export class ClienteService {
             };
         }
 
-        const todasNotas = this.notaFiscalRepository.listarTodasNotasFiscais();
+        const todasNotas = await this.notaFiscalRepository.listarTodasNotasFiscais();
         const notasDoCliente = todasNotas.filter(nota => nota.id_cliente === idNumber);
 
         return notasDoCliente;
