@@ -7,11 +7,11 @@ export class CarroService{
 private carroRepository : CarroRepository = CarroRepository.getInstance();
 private estoqueRepository : EstoqueRepository = EstoqueRepository.getInstance();
 
-listarTodosCarros(): Carro []{
+async listarTodosCarros(): Promise<Carro[]>{
     return this.carroRepository.listaTodosCarros();
 }
 
-filtrarCarroPorID(id_carro: any): Carro | undefined{
+async filtrarCarroPorID(id_carro: any): Promise<Carro>{
     const idNUmber : number = parseInt (id_carro, 10);
 
     if(isNaN(idNUmber)){
@@ -21,7 +21,7 @@ filtrarCarroPorID(id_carro: any): Carro | undefined{
         }
     }
     
-    const carro = this.carroRepository.filtrarCarroPorID(idNUmber);
+    const carro = await this.carroRepository.filtrarCarroPorID(idNUmber);
     
     if(!carro){
     throw{
@@ -32,15 +32,15 @@ filtrarCarroPorID(id_carro: any): Carro | undefined{
     return carro;
 }
 
-obterCarrosDisponiveis(): Carro[] {
+async obterCarrosDisponiveis(): Promise<Carro[]> {
 
-    const carros = this.carroRepository.listaTodosCarros();
+    const carros = await this.carroRepository.listaTodosCarros();
 
     const carrosDisponiveis: Carro[] = [];
 
     for(const carro of carros){
 
-        const estoque = this.estoqueRepository.buscarEstoqueEspecificoDeCarro(carro.id_carro);
+        const estoque = await this.estoqueRepository.buscarEstoqueEspecificoDeCarro(carro.id_carro);
 
         if(estoque && estoque.quantidade > 0){
             carrosDisponiveis.push(carro);
@@ -50,7 +50,7 @@ obterCarrosDisponiveis(): Carro[] {
     return carrosDisponiveis;
 }
 
-cadastrarNovoCarro(carroData : Carro): Carro {
+async cadastrarNovoCarro(carroData : any): Promise<Carro> {
     const{ marca, modelo, ano, placa, preco, cor} = carroData;
     if(!marca || !modelo || !ano || !placa || preco == null || !cor ){
         throw{
@@ -59,7 +59,7 @@ cadastrarNovoCarro(carroData : Carro): Carro {
         }
     }
 
-    const carroExistente = this.carroRepository.filtrarCarroPorPlaca(placa);
+    const carroExistente = await this.carroRepository.filtrarCarroPorPlaca(placa);
     if(carroExistente){
         throw{
             status:409,
@@ -82,12 +82,11 @@ cadastrarNovoCarro(carroData : Carro): Carro {
         }
     }
 
-    const novoCarro = new Carro (marca, modelo, ano, placa, preco, cor);
-    this.carroRepository.cadastrarCarro(novoCarro);
-    return novoCarro;
+    const novoCarro = new Carro ( null, marca, modelo, ano, placa, preco, cor);
+    return await this.carroRepository.cadastrarCarro(novoCarro);
 }
 
-atualizarCarroPorID(id_car: any, carroData: any): Carro{
+async atualizarCarroPorID(id_car: any, carroData: any): Promise<Carro>{
     const id_carro : number = parseInt(id_car, 10);
     const{ marca, modelo, ano, placa, preco, cor} = carroData;
 
@@ -120,7 +119,7 @@ atualizarCarroPorID(id_car: any, carroData: any): Carro{
         }
     }
 
-    const carroExistente = this.carroRepository.filtrarCarroPorID(id_carro);
+    const carroExistente = await this.carroRepository.filtrarCarroPorID(id_carro);
 
     if(!carroExistente){
         throw{
@@ -129,7 +128,7 @@ atualizarCarroPorID(id_car: any, carroData: any): Carro{
         }
     }
 
-    const carroPlaca = this.carroRepository.filtrarCarroPorPlaca(placa);
+    const carroPlaca = await this.carroRepository.filtrarCarroPorPlaca(placa);
 
     if(carroPlaca && carroPlaca.id_carro !== id_carro){
         throw {
@@ -138,12 +137,10 @@ atualizarCarroPorID(id_car: any, carroData: any): Carro{
         }
     }
 
-    const carroAtualizado = this.carroRepository.atualizarCarroPorID(id_carro, carroData)
-
-    return carroAtualizado;
+    return await this.carroRepository.atualizarCarroPorID(id_carro, carroData)
 }
     
-apagarCarroPorID(id_carro: any): Carro {
+async apagarCarroPorID(id_carro: any): Promise<Carro> {
     const idNumber : number = parseInt (id_carro, 10);
 
     if(isNaN(idNumber)){
@@ -153,7 +150,7 @@ apagarCarroPorID(id_carro: any): Carro {
         }
     }
 
-    const carroExistente = this.carroRepository.filtrarCarroPorID(idNumber)
+    const carroExistente = await this.carroRepository.filtrarCarroPorID(idNumber)
 
     if(!carroExistente){
         throw{
@@ -162,7 +159,7 @@ apagarCarroPorID(id_carro: any): Carro {
         }
     }
 
-    const carroEstoque = this.estoqueRepository.buscarEstoqueEspecificoDeCarro(idNumber);
+    const carroEstoque = await this.estoqueRepository.buscarEstoqueEspecificoDeCarro(idNumber);
 
     if(carroEstoque){
         throw{
@@ -170,8 +167,7 @@ apagarCarroPorID(id_carro: any): Carro {
             message:"Carro possui registro de estoque, não é possivel deletar"
         }
     }
-    const carroApagado = this.carroRepository.apagarCarroPorID(idNumber);
 
-    return carroApagado;
+    return await this.carroRepository.apagarCarroPorID(carroExistente);
 }
 }
