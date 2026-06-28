@@ -14,7 +14,7 @@ export class ClienteRepository {
         return this.instance;
     }
 
-     static getCreateTableQuery(): string {
+    static getCreateTableQuery(): string {
         return `
             CREATE TABLE IF NOT EXISTS cliente (
                 id_cliente INT AUTO_INCREMENT PRIMARY KEY,
@@ -27,18 +27,54 @@ export class ClienteRepository {
         `;
     }
 
-    async listarCliente(): Promise<Cliente[]> {
-        const linhas = await executarComandoSQL("SELECT * FROM cliente", []);
-        return (linhas as any[]).map(linha =>
-            new Cliente(linha.id_cliente, linha.nome, linha.cpf, linha.telefone, linha.email, linha.cidade)
+    async listarClientes(): Promise<Cliente[]> {
+        const linhas = await executarComandoSQL(
+            "SELECT id_cliente, nome, cpf, telefone, email, cidade FROM cliente",
+            []
         );
+
+        const clientes: Cliente[] = linhas.map((linha: any) => {
+            return new Cliente(
+                linha.id_cliente,
+                linha.nome,
+                linha.cpf,
+                linha.telefone,
+                linha.email,
+                linha.cidade
+            );
+        });
+
+        return new Promise<Cliente[]>((resolve) => {
+            resolve(clientes);
+        });
     }
 
     async buscarClientePorId(id: number): Promise<Cliente | null> {
-        const linhas = await executarComandoSQL("SELECT * FROM cliente WHERE id_cliente = ?", [id]);
-        if (linhas.length === 0) return null;
+        const linhas = await executarComandoSQL(
+            "SELECT * FROM cliente WHERE id_cliente = ?",
+            [id]
+        );
+
+        if (linhas.length === 0) {
+            return new Promise<null>((resolve) => {
+                resolve(null);
+            });
+        }
+
         const linha = linhas[0];
-        return new Cliente(linha.id_cliente, linha.nome, linha.cpf, linha.telefone, linha.email, linha.cidade);
+
+        const cliente = new Cliente(
+            linha.id_cliente,
+            linha.nome,
+            linha.cpf,
+            linha.telefone,
+            linha.email,
+            linha.cidade
+        );
+
+        return new Promise<Cliente>((resolve) => {
+            resolve(cliente);
+        });
     }
 
     async adicionarCliente(cliente: Cliente): Promise<Cliente> {
@@ -46,19 +82,86 @@ export class ClienteRepository {
             "INSERT INTO cliente (nome, cpf, telefone, email, cidade) VALUES (?, ?, ?, ?, ?)",
             [cliente.nome, cliente.cpf, cliente.telefone, cliente.email, cliente.cidade]
         );
-        return new Cliente(resultado.insertId, cliente.nome, cliente.cpf, cliente.telefone, cliente.email, cliente.cidade);
-    }
 
-    async atualizarClientePorId(id: number, clienteData: Cliente): Promise<boolean> {
-        const resultado = await executarComandoSQL(
-            "UPDATE cliente SET nome = ?, cpf = ?, telefone = ?, email = ?, cidade = ? WHERE id_cliente = ?",
-            [clienteData.nome, clienteData.cpf, clienteData.telefone, clienteData.email, clienteData.cidade, id]
+        const newCliente = new Cliente(
+            resultado.insertId,
+            cliente.nome,
+            cliente.cpf,
+            cliente.telefone,
+            cliente.email,
+            cliente.cidade
         );
-        return resultado.affectedRows > 0;
+
+        console.log("Cliente inserido com sucesso:", newCliente);
+
+        return new Promise<Cliente>((resolve) => {
+            resolve(newCliente);
+        });
     }
 
-    async removerCliente(id: number): Promise<boolean> {
-        const resultado = await executarComandoSQL("DELETE FROM cliente WHERE id_cliente = ?", [id]);
-        return resultado.affectedRows > 0;
+    async atualizarClientePorId(id_cliente: number, clienteData: Cliente): Promise<Cliente> {
+        const query = `
+            UPDATE cliente 
+            SET nome = ?, cpf = ?, telefone = ?, email = ?, cidade = ?
+            WHERE id_cliente = ?;
+        `;
+
+        try {
+            await executarComandoSQL(query, [
+                clienteData.nome,
+                clienteData.cpf,
+                clienteData.telefone,
+                clienteData.email,
+                clienteData.cidade,
+                id_cliente
+            ]);
+
+            return new Promise<Cliente>((resolve) => {
+                resolve(clienteData);
+            });
+
+        } catch (err: any) {
+            console.error(`Erro ao atualizar o cliente ${id_cliente}: ${err}`);
+            throw err;
+        }
+    }
+
+    async removerCliente(id_cliente: number): Promise<Cliente | null> {
+        try {
+            const linhas = await executarComandoSQL(
+                "SELECT * FROM cliente WHERE id_cliente = ?",
+                [id_cliente]
+            );
+
+            if (linhas.length === 0) {
+                return new Promise<null>((resolve) => {
+                    resolve(null);
+                });
+            }
+
+            const clienteRemovido = new Cliente(
+                linhas[0].id_cliente,
+                linhas[0].nome,
+                linhas[0].cpf,
+                linhas[0].telefone,
+                linhas[0].email,
+                linhas[0].cidade
+            );
+
+            await executarComandoSQL(
+                "DELETE FROM cliente WHERE id_cliente = ?",
+                [id_cliente]
+            );
+
+            console.log("Cliente removido com sucesso:", clienteRemovido);
+
+            return new Promise<Cliente>((resolve) => {
+                resolve(clienteRemovido);
+            });
+
+        } catch (err: any) {
+            console.error(`Erro ao remover o cliente ${id_cliente}: ${err}`);
+            throw err;
+        }
     }
 }

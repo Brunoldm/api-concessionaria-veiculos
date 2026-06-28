@@ -78,27 +78,30 @@ export class CarroRepository{
         return newCarro;
     }
 
-    async atualizarCarroPorID(id_carro: number, carroData: Carro): Promise<Carro> {
-        const query = `UPDATE Carro SET marca = ?, modelo = ?, ano = ?, placa = ?, preco = ?, cor = ? WHERE id_carro = ?; `;
+async atualizarClientePorId(id_cliente: number, clienteData: Cliente): Promise<Cliente> {
+    const query = `
+        UPDATE cliente 
+        SET nome = ?, cpf = ?, telefone = ?, email = ?, cidade = ? 
+        WHERE id_cliente = ?;
+    `;
 
-        try {
-            const resultado = await executarComandoSQL(query, [
-                carroData.marca,
-                carroData.modelo,
-                carroData.ano,
-                carroData.placa,
-                carroData.preco,
-                carroData.cor,
-                id_carro
-            ]);
+    try {
+        const resultado = await executarComandoSQL(query, [
+            clienteData.nome,
+            clienteData.cpf,
+            clienteData.telefone,
+            clienteData.email,
+            clienteData.cidade,
+            id_cliente
+        ]);
 
-        console.log("Carro atualizado com sucesso:", resultado);
-        return new Promise<Carro>((resolve)=>{
-                resolve(carroData);
-            })
+        console.log("Cliente atualizado com sucesso:", resultado);
 
+        return new Promise<Cliente>((resolve) => {
+            resolve(clienteData);
+        });
     } catch (err: any) {
-        console.error(`Erro ao atualizar o carro ${id_carro}: ${err}`);
+        console.error(`Erro ao atualizar o cliente ${id_cliente}: ${err}`);
         throw err;
     }
 }
