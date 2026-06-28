@@ -1,39 +1,40 @@
 import { Request , Response } from "express";
 import { CarroService } from "../services/carroService";
 
-const carroService = new CarroService();
+export class CarroController{
+    private carroService = new CarroService();
 
-export function listarTodosCarros(req: Request, res: Response): void{
-    try{
-        const carros = carroService.listarTodosCarros();
-        res.status(200).json(carros);
+    async listarTodosCarros(req: Request, res: Response){
+        try{
+            const carros = await this.carroService.listarTodosCarros();
+            res.status(200).json(carros);
 
-    } catch (error: any){
-        res.status(400).json({
-            message:error.message || "Erro do sistema"
-        });
+        } catch (error: any){
+            res.status(400).json({
+                message:error.message || "Erro do sistema"
+            });
+        }
     }
-}
 
-export function filtrarCarroPorID(req: Request, res: Response): void{
-    try{
-        const id_carro= req.params.id;
+    async filtrarCarroPorID(req: Request, res: Response){
+        try{
+            const id_carro= req.params.id;
 
-        const carro = carroService.filtrarCarroPorID(id_carro);
+            const carro = await this.carroService.filtrarCarroPorID(id_carro);
 
-        res.status(200).json(carro);
+            res.status(200).json(carro);
         
-    } catch(error:any){
+        } catch(error:any){
 
-        res.status(error.status || 500).json({
-            message:error.message || "Erro do sistema"
-        })
+            res.status(error.status || 500).json({
+                message:error.message || "Erro do sistema"
+            })
+        }
     }
-}
 
-export function obterCarrosDisponiveis(req: Request,res: Response): void{
+    async obterCarrosDisponiveis(req: Request,res: Response){
     try{
-        const carros = carroService.obterCarrosDisponiveis();
+        const carros = await this.carroService.obterCarrosDisponiveis();
         res.status(200).json(carros);
 
     } catch (error: any){
@@ -43,11 +44,11 @@ export function obterCarrosDisponiveis(req: Request,res: Response): void{
     }
 }
 
-export function cadastrarNovoCarro(req: Request, res: Response): void{
+    async cadastrarNovoCarro(req: Request, res: Response){
     try{
         const carroData: any = req.body
 
-        const carroCadastrado = carroService.cadastrarNovoCarro(carroData);
+        const carroCadastrado = await this.carroService.cadastrarNovoCarro(carroData);
 
         res.status(201).json({
             message:"Carro cadastrado com sucesso",
@@ -62,12 +63,12 @@ export function cadastrarNovoCarro(req: Request, res: Response): void{
     }
 }
 
-export function atualizarCarroPorID(req: Request, res: Response): void{
+    async atualizarCarroPorID(req: Request, res: Response){
     try{
         const carroData: any = req.body
         const id_carro= req.params.id
 
-        const carroAtualizado = carroService.atualizarCarroPorID(id_carro, carroData)
+        const carroAtualizado = await this.carroService.atualizarCarroPorID(id_carro, carroData)
 
         res.status(200).json({
             message: "Carro Atualizado",
@@ -81,11 +82,11 @@ export function atualizarCarroPorID(req: Request, res: Response): void{
     }
 }
 
-export function apagarCarroPorID(req: Request, res: Response): void{
+    async apagarCarroPorID(req: Request, res: Response){
     try{
     const id_carro = req.params.id;
     
-    carroService.apagarCarroPorID(id_carro)
+    await this.carroService.apagarCarroPorID(id_carro)
 
     res.status(200).json("Carro removido com sucesso")
     
@@ -95,5 +96,4 @@ export function apagarCarroPorID(req: Request, res: Response): void{
         })
     }
 }
-
-
+}
