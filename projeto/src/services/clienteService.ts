@@ -118,6 +118,15 @@ export class ClienteService {
             }
         }
 
+        const notas = this.notaFiscalRepository.listarNotasFiscaisDeUmCliente(idNumber);
+
+    if (notas.length > 0) {
+        throw {
+            status: 422,
+            message: "Cliente possui notas fiscais cadastradas"
+        }
+    }
+
         return this.clienteRepository.removerCliente(idNumber);
     }
 

@@ -24,4 +24,10 @@ export class NotaFiscalRepository {
     emitirNotaFiscal(notaFiscal: NotaFiscal): void {
         this.notaFiscalList.push(notaFiscal);
     }
+
+    listarNotasFiscaisDeUmCliente(id_cliente: number): NotaFiscal[] {
+    return this.notaFiscalList.filter(
+        nota => nota.id_cliente === id_cliente
+    );
+}
 }
