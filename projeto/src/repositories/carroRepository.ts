@@ -96,12 +96,11 @@ export class CarroRepository{
         return new Promise<Carro>((resolve)=>{
                 resolve(carroData);
             })
-
-    } catch (err: any) {
-        console.error(`Erro ao atualizar o carro ${id_carro}: ${err}`);
+         } catch (err: any) {
+                console.error(`Erro ao atualizar o carro ${id_carro}: ${err}`);
         throw err;
     }
-}
+}      
 
     async apagarCarroPorID(carro: Carro): Promise<Carro> {
     const query = "DELETE FROM Carro WHERE id_carro = ?;";
