@@ -1,5 +1,6 @@
 import { Cliente } from "../models/Cliente";
 import mysqlConnection from "../database/mysql";
+import { executarComandoSQL } from "../database/mysql";
 
 export class ClienteRepository {
     private static instance: ClienteRepository;
