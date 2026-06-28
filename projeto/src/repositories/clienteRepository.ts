@@ -1,8 +1,8 @@
 import { Cliente } from "../models/Cliente";
+import mysqlConnection from "../database/mysql";
 
 export class ClienteRepository {
     private static instance: ClienteRepository;
-    private clienteList: Cliente[] = [];
 
     private constructor() {}
 
