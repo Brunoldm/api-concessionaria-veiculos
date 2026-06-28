@@ -35,7 +35,7 @@ export class CarroRepository{
             linha.id_carro,
             linha.marca,
             linha.modelo,
-            Number(linha.ano),
+            (linha.ano),
             linha.placa,
             Number(linha.preco),
             linha.cor);

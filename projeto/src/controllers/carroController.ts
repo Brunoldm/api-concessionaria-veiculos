@@ -1,5 +1,6 @@
 import { Request , Response } from "express";
 import { CarroService } from "../services/carroService";
+import { Carro } from "../models/Carro";
 
 export class CarroController{
     private carroService = new CarroService();
@@ -88,7 +89,9 @@ export class CarroController{
     
     await this.carroService.apagarCarroPorID(id_carro)
 
-    res.status(200).json("Carro removido com sucesso")
+    res.status(200).json({
+        message: "Carro removido com sucesso"
+    })
     
     }catch(error: any){
         res.status(error.status || 500).json ({
