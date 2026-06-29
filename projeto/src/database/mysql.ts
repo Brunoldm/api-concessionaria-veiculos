@@ -1,12 +1,16 @@
 import mysql, { Connection, QueryError } from 'mysql2';
 import { ClienteRepository } from "../repositories/clienteRepository";
+import { VendedorRepository } from "../repositories/vendedorRepository";
+import { CarroRepository } from "../repositories/carroRepository";
+import { EstoqueRepository } from "../repositories/estoqueRepository";
+import { NotaFiscalRepository } from "../repositories/notaFiscalRepository";
 
 const dbConfig = {
   host: 'localhost',
   port: 3306,
   user: 'root',
-  password: 'mysql',
-  database: 'api-concessionaria-veiculos'
+  password: '',
+  database: 'api_concessionaria_veiculos'
 };
 
 const mysqlConnection: Connection = mysql.createConnection(dbConfig);
@@ -37,6 +41,10 @@ export async function inicializarBanco(): Promise<void> {
 
   const schemas = [
     ClienteRepository.getCreateTableQuery(),
+    VendedorRepository.getCreateTableQuery(),
+    CarroRepository.getCreateTableQuery(),
+    EstoqueRepository.getCreateTableQuery(),
+    NotaFiscalRepository.getCreateTableQuery()
 
   ];
 
