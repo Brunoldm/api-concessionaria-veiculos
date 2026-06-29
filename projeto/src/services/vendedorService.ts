@@ -7,18 +7,18 @@ export class VendedorService {
     private vendedorRepository: VendedorRepository = VendedorRepository.getInstance();
     private notaFiscalRepository: NotaFiscalRepository = NotaFiscalRepository.getInstance();
 
-    listarTodosVendedores(): Vendedor[] {
-        return this.vendedorRepository.listarTodosVendedores();
+    async listarTodosVendedores(): Promise<Vendedor[]> {
+        return await this.vendedorRepository.listaTodosVendedores();
     }
 
-    buscarVendedorPorId(id_vend: any): Vendedor {
+    async buscarVendedorPorId(id_vend: any): Promise<Vendedor> {
         const idNumber: number = parseInt(id_vend, 10);
 
         if (isNaN(idNumber)) {
             throw { status: 400, message: "ID Inválido" };
         }
 
-        const vendedor = this.vendedorRepository.buscarVendedorPorId(idNumber);
+        const vendedor = await this.vendedorRepository.filtrarVendedorPorID(idNumber);
 
         if (!vendedor) {
             throw { status: 404, message: "Vendedor não encontrado" };
@@ -27,7 +27,7 @@ export class VendedorService {
         return vendedor;
     }
 
-    cadastrarNovoVendedor(vendedorData: any): Vendedor {
+    async cadastrarNovoVendedor(vendedorData: any): Promise<Vendedor> {
         const { nome, matricula, comissao_percentual } = vendedorData;
 
         if (!nome || !matricula || comissao_percentual == null) {
@@ -38,20 +38,18 @@ export class VendedorService {
             throw { status: 400, message: "A comissão deve ser um valor entre 0 e 30" };
         }
 
-        const todosVendedores = this.vendedorRepository.listarTodosVendedores();
-        const matriculaJaExiste = todosVendedores.find(v => v.matricula === matricula);
+        const matriculaJaExiste = await this.vendedorRepository.filtrarVendedorPorMatricula(matricula);
         
         if (matriculaJaExiste) {
-            throw { status: 409, message: "Ja existe um vendedor cadastrado" };
+            throw { status: 409, message: "Ja existe um vendedor cadastrado com esta matricula." };
         }
 
-        const novoVendedor = new Vendedor(nome, matricula, comissao_percentual);
-        this.vendedorRepository.criarNovoVendedor(novoVendedor);
+        const novoVendedor = new Vendedor(null, nome, matricula, comissao_percentual);
         
-        return novoVendedor;
+        return await this.vendedorRepository.cadastrarVendedor(novoVendedor);
     }
 
-    atualizarVendedor(id_vend: any, vendedorData: any): Vendedor {
+    async atualizarVendedor(id_vend: any, vendedorData: any): Promise<Vendedor> {
         const idNumber: number = parseInt(id_vend, 10);
         const { nome, matricula, comissao_percentual } = vendedorData;
 
@@ -67,59 +65,60 @@ export class VendedorService {
             throw { status: 400, message: "A comissão deve ser um valor entre 0 e 30" };
         }
 
-        const vendedorExistente = this.vendedorRepository.buscarVendedorPorId(idNumber);
+        const vendedorExistente = await this.vendedorRepository.filtrarVendedorPorID(idNumber);
 
         if (!vendedorExistente) {
             throw { status: 404, message: "Vendedor não encontrado" };
         }
 
-        const todosVendedores = this.vendedorRepository.listarTodosVendedores();
-        const matriculaEmUso = todosVendedores.find(v => v.matricula === matricula && v.id_vendedor !== idNumber);
+        const matriculaEmUso = await this.vendedorRepository.filtrarVendedorPorMatricula(matricula);
         
-        if (matriculaEmUso) {
+        if (matriculaEmUso && matriculaEmUso.id_vendedor !== idNumber) {
             throw { status: 409, message: "essa matricula  esta sendo usada por outro vendedor" };
         }
 
-        return this.vendedorRepository.atualizarVendedor(idNumber, vendedorData);
+        const vendedorParaAtualizar = new Vendedor(idNumber, nome, matricula, comissao_percentual);
+
+        return await this.vendedorRepository.atualizarVendedorPorID(idNumber, vendedorParaAtualizar);
     }
 
-    removerVendedor(id_vend: any): Vendedor {
+    async removerVendedor(id_vend: any): Promise<Vendedor> {
         const idNumber: number = parseInt(id_vend, 10);
 
         if (isNaN(idNumber)) {
             throw { status: 400, message: "ID Invalido" };
         }
 
-        const vendedorExistente = this.vendedorRepository.buscarVendedorPorId(idNumber);
+        const vendedorExistente = await this.vendedorRepository.filtrarVendedorPorID(idNumber);
 
         if (!vendedorExistente) {
             throw { status: 404, message: "Vendedor não encontrado" };
         }
 
-        const todasNotas = this.notaFiscalRepository.listarTodasNotasFiscais();
+        const todasNotas = await this.notaFiscalRepository.listarTodasNotasFiscais();
         const notasDoVendedor = todasNotas.filter(nota => nota.id_vendedor === idNumber);
 
         if (notasDoVendedor.length > 0) {
             throw { status: 422, message: "o vendedor possui notas fiscais vinculadas,não pode ser removido" };
         }
 
-        return this.vendedorRepository.removerVendedor(idNumber);
+        return await this.vendedorRepository.apagarVendedorPorID(vendedorExistente);
     }
 
-    listarNotasFiscaisDeUmVendedor(id_vend: any) {
+    async listarNotasFiscaisDeUmVendedor(id_vend: any) {
         const idNumber: number = parseInt(id_vend, 10);
 
         if (isNaN(idNumber)) {
             throw { status: 400, message: "ID Invalido" };
         }
 
-        const vendedorExistente = this.vendedorRepository.buscarVendedorPorId(idNumber);
+        const vendedorExistente = await this.vendedorRepository.filtrarVendedorPorID(idNumber);
 
         if (!vendedorExistente) {
             throw { status: 404, message: "Vendedor não encontrado" };
         }
 
-        const todasNotas = this.notaFiscalRepository.listarTodasNotasFiscais();
+        const todasNotas = await this.notaFiscalRepository.listarTodasNotasFiscais();
         const notasDoVendedor = todasNotas.filter(nota => nota.id_vendedor === idNumber);
 
         if (notasDoVendedor.length === 0) {

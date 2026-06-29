@@ -13,18 +13,18 @@ export class NotaFiscalService {
     private clienteRepository = ClienteRepository.getInstance();
     private carroRepository = CarroRepository.getInstance();
 
-    listarTodasNotasFiscais(): NotaFiscal[] {
-        return this.notaFiscalRepository.listarTodasNotasFiscais();
+    async listarTodasNotasFiscais(): Promise<NotaFiscal[]> {
+        return await this.notaFiscalRepository.listarTodasNotasFiscais();
     }
 
-    buscarNotaFiscalPorId(id_not: any): NotaFiscal {
+    async buscarNotaFiscalPorId(id_not: any): Promise<NotaFiscal> {
         const idNumber: number = parseInt(id_not, 10);
 
         if (isNaN(idNumber)) {
             throw { status: 400, message: "ID Inválido" };
         }
 
-        const nota = this.notaFiscalRepository.buscarNotaFiscalPorId(idNumber);
+        const nota = await this.notaFiscalRepository.buscarNotaFiscalPorId(idNumber);
 
         if (!nota) {
             throw { status: 404, message: "Nota Fiscal não encontrada" };
@@ -33,7 +33,7 @@ export class NotaFiscalService {
         return nota;
     }
 
-    emitirNotaFiscal(notaFiscalData: any): NotaFiscal {
+    async emitirNotaFiscal(notaFiscalData: any): Promise<NotaFiscal> {
         const { numero_nota, data_emissao, valor_total, id_cliente, id_vendedor, id_carro } = notaFiscalData;
 
         if (!numero_nota || !data_emissao || valor_total == null || !id_cliente || !id_vendedor || !id_carro) {
@@ -44,8 +44,8 @@ export class NotaFiscalService {
             throw { status: 400, message: "O valor total da nota fiscal deve ser  maior que zero." };
         }
 
-        const todasNotas = this.notaFiscalRepository.listarTodasNotasFiscais();
-        const notaJaExiste = todasNotas.find(n => n.numero_nota === numero_nota);
+        const todasNotas = await this.notaFiscalRepository.listarTodasNotasFiscais();
+        const notaJaExiste = todasNotas.find((n: NotaFiscal) => n.numero_nota === numero_nota);
         if (notaJaExiste) {
             throw { status: 409, message: "Já existe uma nota fiscal emitida com este número." };
         }
@@ -56,22 +56,22 @@ export class NotaFiscalService {
             throw { status: 400, message: "Data de emissão inválida." };
         }
 
-        const clienteExistente = this.clienteRepository.buscarClientePorId(id_cliente); 
+        const clienteExistente = await this.clienteRepository.buscarClientePorId(id_cliente); 
         if (!clienteExistente) {
             throw { status: 404, message: "Cliente não encontrado no sistema." };
         }
 
-        const vendedorExistente = this.vendedorRepository.buscarVendedorPorId(id_vendedor);
+        const vendedorExistente = await this.vendedorRepository.filtrarVendedorPorID(id_vendedor);
         if (!vendedorExistente) {
             throw { status: 404, message: "Vendedor não encontrado no sistema." };
         }
 
-        const carroExistente = this.carroRepository.filtrarCarroPorID(id_carro);
+        const carroExistente = await this.carroRepository.filtrarCarroPorID(id_carro);
         if (!carroExistente) {
             throw { status: 404, message: "Carro não encontrado no sistema." };
         }
 
-        const estoqueDoCarro = this.estoqueRepository.buscarEstoqueEspecificoDeCarro(id_carro);
+        const estoqueDoCarro = await this.estoqueRepository.buscarEstoqueEspecificoDeCarro(id_carro);
         
         if (!estoqueDoCarro) {
             throw { status: 404, message: "registro de estoque não encontrado para este carro." };
@@ -82,11 +82,19 @@ export class NotaFiscalService {
         }
 
         estoqueDoCarro.quantidade -= 1;
-        this.estoqueRepository.atualizarEstoque(estoqueDoCarro.id_estoque, estoqueDoCarro);
-
-        const novaNota = new NotaFiscal(numero_nota, dataEmissaoConvertida, valor_total, id_cliente, id_vendedor, id_carro);
-        this.notaFiscalRepository.emitirNotaFiscal(novaNota);
         
-        return novaNota;
+        await this.estoqueRepository.atualizarEstoque(estoqueDoCarro.id_estoque!, estoqueDoCarro);
+
+        const novaNota = new NotaFiscal(
+            null, 
+            numero_nota, 
+            dataEmissaoConvertida, 
+            valor_total, 
+            id_cliente, 
+            id_vendedor, 
+            id_carro
+        );
+        
+        return await this.notaFiscalRepository.emitirNotaFiscal(novaNota);
     }
 }
