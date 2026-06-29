@@ -40,6 +40,10 @@ async obterCarrosDisponiveis(): Promise<Carro[]> {
 
     for(const carro of carros){
 
+        if(carro.id_carro === null){
+            continue;
+        }
+
         const estoque = await this.estoqueRepository.buscarEstoqueEspecificoDeCarro(carro.id_carro);
 
         if(estoque && estoque.quantidade > 0){

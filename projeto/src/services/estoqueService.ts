@@ -7,11 +7,11 @@ export class EstoqueService{
 private estoqueRepository : EstoqueRepository = EstoqueRepository.getInstance();
 private carroRepository : CarroRepository = CarroRepository.getInstance(); 
 
-listaTodosRegistroEstoque(): Estoque[]{
+async listaTodosRegistroEstoque(): Promise<Estoque[]>{
     return this.estoqueRepository.listaTodosRegistroEstoque();
 }
 
-buscarRegistroDeEstoque(id_estoque: any): Estoque {
+async buscarRegistroDeEstoque(id_estoque: any): Promise<Estoque> {
     const idNUmber : number = parseInt (id_estoque, 10);
 
     if(isNaN(idNUmber)){
@@ -21,7 +21,7 @@ buscarRegistroDeEstoque(id_estoque: any): Estoque {
         }
     }
     
-    const estoque = this.estoqueRepository.buscarRegistroDeEstoque(idNUmber);
+    const estoque = await this.estoqueRepository.buscarRegistroDeEstoque(idNUmber);
     
     if(!estoque){
     throw{
@@ -32,7 +32,7 @@ buscarRegistroDeEstoque(id_estoque: any): Estoque {
     return estoque;
 }
 
-buscarEstoqueEspecificoDeCarro(id_carro: any): Estoque {
+async buscarEstoqueEspecificoDeCarro(id_carro: any): Promise<Estoque> {
     const idNUmber : number = parseInt (id_carro, 10);
 
     if(isNaN(idNUmber)){
@@ -42,7 +42,7 @@ buscarEstoqueEspecificoDeCarro(id_carro: any): Estoque {
         }
     }
     
-    const estoque = this.estoqueRepository.buscarEstoqueEspecificoDeCarro(idNUmber);
+    const estoque = await this.estoqueRepository.buscarEstoqueEspecificoDeCarro(idNUmber);
     
     if(!estoque){
     throw{
@@ -53,7 +53,7 @@ buscarEstoqueEspecificoDeCarro(id_carro: any): Estoque {
     return estoque;
 }
 
-criarNovoRegistroEstoque(estoqueData: Estoque): Estoque {
+async criarNovoRegistroEstoque(estoqueData: Estoque): Promise<Estoque> {
     const {id_carro, quantidade, localizacao_patio, data_entrada} = estoqueData;
 
      if(!id_carro || quantidade == null || !localizacao_patio || !data_entrada){
@@ -63,7 +63,7 @@ criarNovoRegistroEstoque(estoqueData: Estoque): Estoque {
         }
     } 
     
-    const carro = this.carroRepository.filtrarCarroPorID(id_carro)
+    const carro = await this.carroRepository.filtrarCarroPorID(id_carro)
 
     if(!carro){
         throw{
@@ -89,7 +89,7 @@ criarNovoRegistroEstoque(estoqueData: Estoque): Estoque {
         }
     }
 
-    const estoqueExistente = this.estoqueRepository.buscarEstoqueEspecificoDeCarro(id_carro);
+    const estoqueExistente = await this.estoqueRepository.buscarEstoqueEspecificoDeCarro(id_carro);
 
     if(estoqueExistente){
         throw{
@@ -98,12 +98,12 @@ criarNovoRegistroEstoque(estoqueData: Estoque): Estoque {
         }
     }
 
-    const novoEstoque = new Estoque (id_carro, quantidade, localizacao_patio, data_entrada);
-    this.estoqueRepository.criarNovoRegistroEstoque(novoEstoque);
-    return novoEstoque;
+    const novoEstoque = new Estoque (null, id_carro, quantidade, localizacao_patio, data_entrada);
+    
+    return await this.estoqueRepository.criarNovoRegistroEstoque(novoEstoque);
 }
 
-atualizarEstoque(id_estoq: any, estoqueData: any): Estoque{
+async atualizarEstoque(id_estoq: any, estoqueData: any): Promise<Estoque>{
     const id_estoque : number = parseInt(id_estoq,10)
     const {quantidade, localizacao_patio} = estoqueData;
 
@@ -121,7 +121,7 @@ atualizarEstoque(id_estoq: any, estoqueData: any): Estoque{
         }
     }
 
-    const estoque =this.estoqueRepository.buscarRegistroDeEstoque(id_estoque);
+    const estoque = await this.estoqueRepository.buscarRegistroDeEstoque(id_estoque);
 
     if(!estoque){
     throw{
@@ -137,11 +137,10 @@ atualizarEstoque(id_estoq: any, estoqueData: any): Estoque{
     }
 }
 
-    const estoqueAtualizado = this.estoqueRepository.atualizarEstoque(id_estoque, estoqueData);
-    return estoqueAtualizado;
+    return await this.estoqueRepository.atualizarEstoque(id_estoque, estoqueData);;
 }
 
-removerRegistroEstoque(id_estoq: any): Estoque{
+async removerRegistroEstoque(id_estoq: any): Promise<Estoque>{
     const idNumber : number = parseInt(id_estoq,10)
 
     if(isNaN(idNumber)){
@@ -151,7 +150,7 @@ removerRegistroEstoque(id_estoq: any): Estoque{
         }
     }
     
-    const estoque = this.estoqueRepository.buscarRegistroDeEstoque(idNumber)
+    const estoque = await this.estoqueRepository.buscarRegistroDeEstoque(idNumber)
 
     if(!estoque){
         throw{
@@ -159,9 +158,7 @@ removerRegistroEstoque(id_estoq: any): Estoque{
             message:"ID não encontrado"
         }
     }
-
-    const estoqueApagado = this.estoqueRepository.removerRegistroEstoque(idNumber);
-
-    return estoqueApagado;
+    
+    return await this.estoqueRepository.removerRegistroEstoque(estoque);
 }
 }
