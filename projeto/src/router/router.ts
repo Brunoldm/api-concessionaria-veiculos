@@ -1,11 +1,13 @@
 import { Router, Request, Response } from 'express';
 import { EstoqueController } from "../controllers/estoqueController";
 import { CarroController } from "../controllers/carroController";
+import { ClienteController } from "../controllers/clienteController";
 
 const router = Router();
 
 const carroController = new CarroController();
 const estoqueController = new EstoqueController();
+const clienteController = new ClienteController();
 
 // Rotas Carros
 router.get("/carros", (req: Request, res: Response) => {carroController.listarTodosCarros(req, res);});
@@ -32,5 +34,13 @@ router.post("/estoques", (req: Request, res: Response) => {estoqueController.cri
 router.put("/estoques/:id", (req: Request, res: Response) => {estoqueController.atualizarEstoque(req, res);});
 
 router.delete("/estoques/:id", (req: Request, res: Response) => {estoqueController.removerRegistroEstoque(req, res);});
+
+// Rotas Cliente
+router.get("/clientes", (req, res) => {clienteController.listarTodosClientes(req, res);});
+router.get("/clientes/:id", (req, res) => {clienteController.buscarCliente(req, res);});
+router.post("/clientes", (req, res) => {clienteController.cadastrarNovoCliente(req, res);});
+router.put("/clientes/:id", (req, res) => {clienteController.atualizarCliente(req, res);});
+router.delete("/clientes/:id", (req, res) => {clienteController.deletarCliente(req, res);});
+router.get("/clientes/notas/:id", (req, res) => {clienteController.listarNotasFiscaisDeUmCliente(req, res);});
 
 export default router;
