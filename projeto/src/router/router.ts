@@ -56,8 +56,8 @@ router.delete("/vendedores/:id", (req: Request, res: Response) => {vendedorContr
 router.get("/vendedores/notas/:id", (req: Request, res: Response) => {vendedorController.listarNotasFiscaisDeUmVendedor(req, res);});
 
 // Rotas Nota Fiscal
-router.get("/notas-fiscais", (req: Request, res: Response) => {notaFiscalController.listarTodasNotasFiscais(req, res);});
-router.get("/notas-fiscais/:id", (req: Request, res: Response) => {notaFiscalController.buscarNotaFiscalPorId(req, res);});
-router.post("/notas-fiscais", (req: Request, res: Response) => {notaFiscalController.emitirNotaFiscal(req, res);});
+router.get("/notas", (req: Request, res: Response) => {notaFiscalController.listarTodasNotasFiscais(req, res);});
+router.get("/notas/:id", (req: Request, res: Response) => {notaFiscalController.buscarNotaFiscalPorId(req, res);});
+router.post("/notas", (req: Request, res: Response) => {notaFiscalController.emitirNotaFiscal(req, res);});
 
 export default router;
