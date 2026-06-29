@@ -1,11 +1,12 @@
 import { Request, Response } from "express";
 import { EstoqueService } from "../services/estoqueService";
 
-const estoqueService = new EstoqueService();
+export class EstoqueController{
+private estoqueService = new EstoqueService();
 
-export function listaTodosRegistroEstoque(req: Request, res: Response): void{
+async listaTodosRegistroEstoque(req: Request, res: Response){
     try{
-        const estoques = estoqueService.listaTodosRegistroEstoque();
+        const estoques = await this.estoqueService.listaTodosRegistroEstoque();
         res.status(200).json(estoques);
 
     } catch (error: any){
@@ -15,11 +16,11 @@ export function listaTodosRegistroEstoque(req: Request, res: Response): void{
     }
 }
 
-export function buscarRegistroDeEstoque(req: Request, res: Response): void{
+async buscarRegistroDeEstoque(req: Request, res: Response){
     try{
         const id_estoque= req.params.id;
 
-        const estoque = estoqueService.buscarRegistroDeEstoque(id_estoque);
+        const estoque = await this.estoqueService.buscarRegistroDeEstoque(id_estoque);
 
         res.status(200).json(estoque);
         
@@ -31,11 +32,11 @@ export function buscarRegistroDeEstoque(req: Request, res: Response): void{
     }
 }
 
-export function buscarEstoqueEspecificoDeCarro(req: Request, res: Response): void{
+async buscarEstoqueEspecificoDeCarro(req: Request, res: Response){
     try{
         const id_carro= req.params.id_carro;
 
-        const estoque = estoqueService.buscarEstoqueEspecificoDeCarro(id_carro);
+        const estoque = await this.estoqueService.buscarEstoqueEspecificoDeCarro(id_carro);
 
         res.status(200).json(estoque);
         
@@ -47,11 +48,11 @@ export function buscarEstoqueEspecificoDeCarro(req: Request, res: Response): voi
     }
 }
 
-export function criarNovoRegistroEstoque(req: Request, res: Response): void{
+async criarNovoRegistroEstoque(req: Request, res: Response){
     try{
         const estoqueData: any = req.body
 
-        const estoqueCadastrado = estoqueService.criarNovoRegistroEstoque(estoqueData);
+        const estoqueCadastrado = await this.estoqueService.criarNovoRegistroEstoque(estoqueData);
 
         res.status(201).json({
             message:"Estoque adicionado com sucesso",
@@ -66,12 +67,12 @@ export function criarNovoRegistroEstoque(req: Request, res: Response): void{
     }
 }
 
-export function atualizarEstoque(req: Request, res: Response): void{
+async atualizarEstoque(req: Request, res: Response){
     try{
         const estoqueData: any = req.body
         const id_estoque= req.params.id
 
-        const estoqueAtualizado = estoqueService.atualizarEstoque(id_estoque, estoqueData)
+        const estoqueAtualizado = await this.estoqueService.atualizarEstoque(id_estoque, estoqueData)
 
         res.status(200).json({
             message: "Estoque Atualizado",
@@ -85,11 +86,11 @@ export function atualizarEstoque(req: Request, res: Response): void{
     }
 }
 
-export function removerRegistroEstoque(req: Request, res: Response): void{
+async removerRegistroEstoque(req: Request, res: Response){
     try{
     const id_estoque = req.params.id;
 
-    estoqueService.removerRegistroEstoque(id_estoque)
+    await this.estoqueService.removerRegistroEstoque(id_estoque)
 
     res.status(200).json({
         message:"Estoque removido com sucesso"
@@ -100,4 +101,5 @@ export function removerRegistroEstoque(req: Request, res: Response): void{
             message: error.message || "Erro do sistema"
         })
     }
+}
 }
