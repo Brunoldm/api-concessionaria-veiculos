@@ -1,11 +1,13 @@
 import { Request, Response } from "express";
 import { ClienteService } from "../services/clienteService";
 
-const clienteService = new ClienteService();
+export class ClienteController {
+    private clienteService = new ClienteService();
 
-export function listarTodosClientes(req: Request, res: Response): void {
+
+async listarTodosClientes(req: Request, res: Response) {
     try {
-        const clientes = clienteService.listarTodosClientes();
+        const clientes = await this.clienteService.listarTodosClientes();
         res.status(200).json(clientes);
     } catch (error: any) {
         res.status(error.status || 500).json({
@@ -14,9 +16,9 @@ export function listarTodosClientes(req: Request, res: Response): void {
     }
 }
 
-export function buscarCliente(req: Request, res: Response): void {
+async buscarCliente(req: Request, res: Response) {
     try {
-        const cliente = clienteService.buscarCliente(req.params.id);
+        const cliente = await this.clienteService.buscarCliente(req.params.id);
         res.status(200).json(cliente);
     } catch (error: any) {
         res.status(error.status || 500).json({
@@ -25,9 +27,9 @@ export function buscarCliente(req: Request, res: Response): void {
     }
 }
 
-export function cadastrarNovoCliente(req: Request, res: Response): void {
+async cadastrarNovoCliente(req: Request, res: Response) {
     try {
-        const cliente = clienteService.cadastrarNovoCliente(req.body);
+        const cliente = await this.clienteService.cadastrarNovoCliente(req.body);
         res.status(201).json(cliente);
     } catch (error: any) {
         res.status(error.status || 500).json({
@@ -36,9 +38,9 @@ export function cadastrarNovoCliente(req: Request, res: Response): void {
     }
 }
 
-export function atualizarCliente(req: Request, res: Response): void {
+async atualizarCliente(req: Request, res: Response) {
     try {
-        const cliente = clienteService.atualizarCliente(
+        const cliente = await this.clienteService.atualizarCliente(
             req.params.id,
             req.body
         );
@@ -51,9 +53,9 @@ export function atualizarCliente(req: Request, res: Response): void {
     }
 }
 
-export function deletarCliente(req: Request, res: Response): void {
+async deletarCliente(req: Request, res: Response) {
     try {
-        clienteService.deletarCliente(req.params.id);
+        await this.clienteService.deletarCliente(req.params.id);
 
         res.status(200).json({
             message: "Cliente removido com sucesso"
@@ -65,10 +67,10 @@ export function deletarCliente(req: Request, res: Response): void {
     }
 }
 
-export function listarNotasFiscaisDeUmCliente(req: Request, res: Response): void {
+async listarNotasFiscaisDeUmCliente(req: Request, res: Response) {
     try {
         const id_cliente = req.params.id;
-        const notas = clienteService.listarNotasFiscaisDeUmCliente(id_cliente);
+        const notas = await this.clienteService.listarNotasFiscaisDeUmCliente(id_cliente);
         
         res.status(200).json(notas);
     } catch (error: any) {
@@ -76,4 +78,5 @@ export function listarNotasFiscaisDeUmCliente(req: Request, res: Response): void
             message: error.message || "Erro do sistema"
         });
     }
+}
 }
