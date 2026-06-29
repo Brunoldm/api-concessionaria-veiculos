@@ -2,12 +2,16 @@ import { Router, Request, Response } from 'express';
 import { EstoqueController } from "../controllers/estoqueController";
 import { CarroController } from "../controllers/carroController";
 import { ClienteController } from "../controllers/clienteController";
+import { VendedorController } from '../controllers/vendedorController';
+import { NotaFiscalController } from '../controllers/notaFiscalController';
 
 const router = Router();
 
 const carroController = new CarroController();
 const estoqueController = new EstoqueController();
 const clienteController = new ClienteController();
+const vendedorController = new VendedorController();
+const notaFiscalController = new NotaFiscalController();
 
 // Rotas Carros
 router.get("/carros", (req: Request, res: Response) => {carroController.listarTodosCarros(req, res);});
@@ -42,5 +46,18 @@ router.post("/clientes", (req, res) => {clienteController.cadastrarNovoCliente(r
 router.put("/clientes/:id", (req, res) => {clienteController.atualizarCliente(req, res);});
 router.delete("/clientes/:id", (req, res) => {clienteController.deletarCliente(req, res);});
 router.get("/clientes/notas/:id", (req, res) => {clienteController.listarNotasFiscaisDeUmCliente(req, res);});
+
+// Rotas Vendedor
+router.get("/vendedores", (req: Request, res: Response) => {vendedorController.listarTodosVendedores(req, res);});
+router.get("/vendedores/:id", (req: Request, res: Response) => {vendedorController.buscarVendedorPorId(req, res);});
+router.post("/vendedores", (req: Request, res: Response) => {vendedorController.cadastrarNovoVendedor(req, res);});
+router.put("/vendedores/:id", (req: Request, res: Response) => {vendedorController.atualizarVendedor(req, res);});
+router.delete("/vendedores/:id", (req: Request, res: Response) => {vendedorController.removerVendedor(req, res);});
+router.get("/vendedores/notas/:id", (req: Request, res: Response) => {vendedorController.listarNotasFiscaisDeUmVendedor(req, res);});
+
+// Rotas Nota Fiscal
+router.get("/notas-fiscais", (req: Request, res: Response) => {notaFiscalController.listarTodasNotasFiscais(req, res);});
+router.get("/notas-fiscais/:id", (req: Request, res: Response) => {notaFiscalController.buscarNotaFiscalPorId(req, res);});
+router.post("/notas-fiscais", (req: Request, res: Response) => {notaFiscalController.emitirNotaFiscal(req, res);});
 
 export default router;
