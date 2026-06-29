@@ -17,10 +17,10 @@ export class ClienteRepository {
         return `
             CREATE TABLE IF NOT EXISTS cliente (
                 id_cliente INT AUTO_INCREMENT PRIMARY KEY,
-                nome VARCHAR(255) NOT NULL,
+                nome VARCHAR(150) NOT NULL,
                 cpf VARCHAR(20) UNIQUE NOT NULL,
                 telefone VARCHAR(20) NOT NULL,
-                email VARCHAR(255),
+                email VARCHAR(150),
                 cidade VARCHAR(100)
             );
         `;

@@ -8,8 +8,8 @@ export class VendedorRepository {
         return `
         CREATE TABLE IF NOT EXISTS Vendedor (
             id_vendedor INT AUTO_INCREMENT PRIMARY KEY, 
-            nome VARCHAR(255) NOT NULL, 
-            matricula VARCHAR(255) NOT NULL UNIQUE, 
+            nome VARCHAR(150) NOT NULL, 
+            matricula VARCHAR(150) NOT NULL UNIQUE, 
             comissao_percentual DECIMAL(10,2) NOT NULL
         );
     `;

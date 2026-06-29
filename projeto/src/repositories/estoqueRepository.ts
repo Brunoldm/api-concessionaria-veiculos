@@ -10,7 +10,7 @@ export class EstoqueRepository{
             id_estoque INT AUTO_INCREMENT PRIMARY KEY,
             id_carro INT NOT NULL, 
             quantidade INT NOT NULL, 
-            localizacao_patio VARCHAR(255) NOT NULL,
+            localizacao_patio VARCHAR(150) NOT NULL,
             data_entrada DATE NOT NULL,
             FOREIGN KEY (id_carro) REFERENCES Carro(id_carro)
         );
